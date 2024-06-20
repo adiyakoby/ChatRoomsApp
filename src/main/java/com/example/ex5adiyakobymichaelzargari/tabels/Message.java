@@ -20,6 +20,12 @@ public class Message {
     @ManyToOne
     private User user;
 
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "room_id", nullable = false)
+    private ChatRoom chatRoom;
+
     public Message(){}
 
     public Message(String message, User user) {

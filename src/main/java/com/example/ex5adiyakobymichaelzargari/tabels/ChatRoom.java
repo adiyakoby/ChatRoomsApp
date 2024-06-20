@@ -1,12 +1,8 @@
 package com.example.ex5adiyakobymichaelzargari.tabels;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -28,15 +24,27 @@ public class ChatRoom {
     private String description;
 
 
-    //private ArrayList<Message> messages = new ArrayList<>();
-
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ArrayList<Message> messages = new ArrayList<>();
     public ChatRoom() {
     }
 
     public ChatRoom(String name, String description, User user) {
         this.name = name;
         this.description = description;
-        //this.user = user;
+    }
+
+    // Methods to manage the bi-directional relationship
+    public void addMessage(Message message) {
+        messages.add(message);
+        message.setChatRoom(this);
+    }
+
+    public void removeMessage(Message message) {
+        messages.remove(message);
+        message.setChatRoom(null);
     }
 
 
