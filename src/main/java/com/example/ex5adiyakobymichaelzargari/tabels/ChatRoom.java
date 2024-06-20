@@ -7,25 +7,22 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 
+
+@Getter
+@Setter
 @Entity
 public class ChatRoom {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Getter
-    @Setter
+
     @NotEmpty(message = "ChatRoom name is mandatory field")
     private String name;
 
-    @Getter
-    @Setter
     private String description;
 
-
-    @Getter
-    @Setter
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
     private ArrayList<Message> messages = new ArrayList<>();
     public ChatRoom() {
