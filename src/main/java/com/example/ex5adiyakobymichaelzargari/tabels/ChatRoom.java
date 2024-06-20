@@ -36,7 +36,6 @@ public class ChatRoom {
         this.description = description;
     }
 
-    // Methods to manage the bi-directional relationship
     public void addMessage(Message message) {
         messages.add(message);
         message.setChatRoom(this);
