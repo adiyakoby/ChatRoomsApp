@@ -15,9 +15,9 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    public long id;
+    private long id;
 
-    //create set user name
+
     @Setter
     @Getter
     @NotEmpty(message = "User Name is mandatory field")
