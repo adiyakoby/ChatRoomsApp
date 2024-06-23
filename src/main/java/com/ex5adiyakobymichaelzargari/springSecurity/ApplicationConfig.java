@@ -1,5 +1,7 @@
 package com.ex5adiyakobymichaelzargari.springSecurity;
 
+import com.ex5adiyakobymichaelzargari.Services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +17,9 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 public class ApplicationConfig  {
 
+    @Autowired
+    UserService userService;
+
     @Bean
     public UserDetailsService userDetailsService(PasswordEncoder bCryptPasswordEncoder) {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
@@ -26,10 +31,8 @@ public class ApplicationConfig  {
                 .password(bCryptPasswordEncoder.encode("test1"))
                 .roles("USER")
                 .build());
-        manager.createUser(User.withUsername("test2")
-                .password(bCryptPasswordEncoder.encode("test2"))
-                .roles("USER")
-                .build());
+        userService.save(new com.ex5adiyakobymichaelzargari.tabels.User("admin", "admin", "ADMIN"));
+        userService.save(new com.ex5adiyakobymichaelzargari.tabels.User("test1", "test1", "USER"));
         return manager;
     }
 
