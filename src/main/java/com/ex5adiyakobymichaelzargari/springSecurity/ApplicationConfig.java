@@ -19,7 +19,7 @@ public class ApplicationConfig  {
     public UserDetailsService userDetailsService(PasswordEncoder bCryptPasswordEncoder) {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(User.withUsername("admin")
-                .password(bCryptPasswordEncoder.encode("password"))
+                .password(bCryptPasswordEncoder.encode("admin"))
                 .roles("ADMIN")
                 .build());
         manager.createUser(User.withUsername("test1")
@@ -49,7 +49,7 @@ public class ApplicationConfig  {
                         .requestMatchers( "/",  "/error").permitAll()
 //                        .requestMatchers("/admin/**").hasRole("ADMIN")
 //                        .requestMatchers("/user/**").hasRole("USER")
-//                        .requestMatchers("/shared/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/shared/**").hasAnyRole("USER", "ADMIN")
                 )
                 .formLogin((form) -> form
                                 .loginPage("/login")
