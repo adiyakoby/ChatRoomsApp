@@ -1,23 +1,20 @@
-package com.ex5adiyakobymichaelzargari.springSecurity;
+package com.ex5adiyakobymichaelzargari.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import java.security.Principal;
 
 @Controller
 public class MainController {
-//
-//    private static Logger logger = LoggerFactory.getLogger(MainController.class);
-//
+
+    private static Logger logger = LoggerFactory.getLogger(MainController.class);
+
     /** Home page. */
     @RequestMapping("/")
     public String index() {
@@ -27,6 +24,11 @@ public class MainController {
     @GetMapping("/login")
     public String login() {
         return "login";
+    }
+
+    @GetMapping("/chatroom")
+    public String chatroom() {
+        return "shared/chatroom";
     }
 //
 //    /** User zone index. */
