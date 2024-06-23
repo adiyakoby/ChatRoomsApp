@@ -1,4 +1,4 @@
-package com.example.ex5adiyakobymichaelzargari.tabels;
+package com.ex5adiyakobymichaelzargari.tabels;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;

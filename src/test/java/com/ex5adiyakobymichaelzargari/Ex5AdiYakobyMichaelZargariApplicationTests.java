@@ -1,4 +1,4 @@
-package com.example.ex5adiyakobymichaelzargari;
+package com.ex5adiyakobymichaelzargari;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

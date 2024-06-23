@@ -1,4 +1,4 @@
-package com.example.ex5adiyakobymichaelzargari.tabels;
+package com.ex5adiyakobymichaelzargari.tabels;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
