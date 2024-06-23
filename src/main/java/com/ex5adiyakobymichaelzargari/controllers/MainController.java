@@ -1,5 +1,6 @@
 package com.ex5adiyakobymichaelzargari.controllers;
 
+import com.ex5adiyakobymichaelzargari.tabels.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,14 @@ public class MainController {
 
     @GetMapping("/login")
     public String login() {
+        System.out.println("GET FOR LOGIN");
         return "login";
+    }
+
+    @GetMapping("/signup")
+    public String signup(Model model) {
+        model.addAttribute("user", new User());
+        return "signup";
     }
 
     @GetMapping("/chatroom")
@@ -44,12 +52,6 @@ public class MainController {
         return "403";
     }
 
-    @PostMapping("/login")
-    public void login(Principal principal) {
-        System.out.println(principal);
-        System.out.println(principal.getName());
-
-    }
 
     @ExceptionHandler({Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
