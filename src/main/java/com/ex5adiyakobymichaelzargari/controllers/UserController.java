@@ -1,8 +1,10 @@
 package com.ex5adiyakobymichaelzargari.controllers;
 
+import com.ex5adiyakobymichaelzargari.Services.MyUserDetailsService;
+import com.ex5adiyakobymichaelzargari.Services.UserService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.ui.Model;
-import com.ex5adiyakobymichaelzargari.Services.UserService;
+//import com.ex5adiyakobymichaelzargari.Services.UserService;
 import com.ex5adiyakobymichaelzargari.tabels.User;
 import com.ex5adiyakobymichaelzargari.tabels.UserRepository;
 import jakarta.validation.Valid;
@@ -23,16 +25,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    UserDetailsService userDetailsService;
 
-
-//    @GetMapping("/login-check")
-//    public String loginCheck(Model model, Principal principal) {
-//        System.out.println("Login check");
-//        System.out.println(principal.getName());
-//        return "login";
-//    }
 
     @PostMapping("/signup")
     public String addUser(@Valid User user, BindingResult result, Model model) {
@@ -43,34 +36,9 @@ public class UserController {
             model.addAttribute("errors", result.getAllErrors());
             return "signup";
         }
-        userRepository.save(user);
+        userService.registerNewUser(user);
         return "index";
     }
-
-    @PostMapping("/login")
-    public String login(@Valid User user, BindingResult result, Model model) {
-        System.out.println("login");
-        if (result.hasErrors()) {
-            System.out.println("validation errors: " + result.getAllErrors());
-            model.addAttribute("errors", result.getAllErrors());
-            return "login";
-        }
-
-        model.addAttribute("user", user);
-        return "index";
-    }
-
-//    @GetMapping("/adduser")
-//    public String showAddUserForm(User user, Model model) {
-//        // redirect to main page
-//        return "redirect:/";
-//    }
-
-  /*  *//** handling IllegalArgumentException *//*
-    @GetMapping("/error")
-    public String error() {
-        return "error";
-    }*/
 
 
 }

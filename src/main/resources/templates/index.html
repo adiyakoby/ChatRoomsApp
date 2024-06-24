@@ -16,7 +16,7 @@
     </div>
     <div sec:authorize="isAuthenticated()" >
         Logged user: <span sec:authentication="name">?</span> |
-        Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span> |
+        Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
         <form th:action="@{/logout}" method="post" style="display:inline">
             <input type="submit" value="Logout" class="btn btn-danger"/>
         </form>

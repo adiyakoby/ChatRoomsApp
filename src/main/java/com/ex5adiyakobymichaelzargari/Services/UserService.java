@@ -3,10 +3,10 @@ package com.ex5adiyakobymichaelzargari.Services;
 
 import com.ex5adiyakobymichaelzargari.tabels.User;
 import com.ex5adiyakobymichaelzargari.tabels.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
 
 /** Service layer is used to implement business logic
  *  it is a good practice to separate the business logic from the controller
@@ -20,9 +20,16 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void save(User user) {
-        userRepository.save(user);
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public User registerNewUser(User user) {
+        User newUser = new User();
+        newUser.setUsername(user.getUsername());
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(newUser);
     }
+
 
 
 }

@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-
 @Controller
 public class MainController {
 
@@ -23,7 +21,6 @@ public class MainController {
 
     @GetMapping("/login")
     public String login() {
-        System.out.println("GET FOR LOGIN");
         return "login";
     }
 
@@ -32,6 +29,7 @@ public class MainController {
         model.addAttribute("user", new User());
         return "signup";
     }
+
 
     @GetMapping("/chatroom")
     public String chatroom() {
