@@ -21,7 +21,7 @@ public class SetupData {
     @PostConstruct
     public void init() {
         initUsers();
-        //initChatRoom();
+        initChatRoom();
     }
 
     private void initUsers() {

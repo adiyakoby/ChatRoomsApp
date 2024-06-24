@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
@@ -17,14 +17,13 @@ public class ChatRoom {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-
     @NotEmpty(message = "ChatRoom name is mandatory field")
     private String name;
 
     private String description;
 
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
-    private ArrayList<Message> messages = new ArrayList<>();
+    private List<Message> messages;
 
     public ChatRoom() {
     }

@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Setter
 @Getter
 @Entity
@@ -19,26 +21,28 @@ public class Message {
     private String message;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Getter
     @Setter
     @Column(name = "created_at", updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "room_id", nullable = false)
+    @JoinColumn(name = "chat_room_id", nullable = false)
     private ChatRoom chatRoom;
 
 
 
 
-    public Message(){}
+    public Message(){
+        this.createdAt = new Date();
+    }
 
     public Message(String message, User user) {
         this.message = message;
         this.user = user;
-        this.createdAt = new java.util.Date();
+        this.createdAt = new Date();
     }
 }
