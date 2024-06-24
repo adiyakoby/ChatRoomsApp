@@ -24,6 +24,9 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public User registerNewUser(User user) {
+        if (userRepository.findByUsername(user.getUsername()) != null) {
+            return null;
+        }
         User newUser = new User();
         newUser.setUsername(user.getUsername());
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
