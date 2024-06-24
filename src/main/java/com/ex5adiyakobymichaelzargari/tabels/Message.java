@@ -40,9 +40,10 @@ public class Message {
         this.createdAt = new Date();
     }
 
-    public Message(String message, User user) {
+    public Message(String message, User user, ChatRoom chatRoom) {
         this.message = message;
         this.user = user;
+        this.chatRoom = chatRoom;
         this.createdAt = new Date();
     }
 }
