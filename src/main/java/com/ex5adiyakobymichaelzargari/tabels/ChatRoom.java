@@ -1,5 +1,6 @@
 package com.ex5adiyakobymichaelzargari.tabels;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -23,6 +24,7 @@ public class ChatRoom {
     private String description;
 
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Message> messages;
 
     public ChatRoom() {
@@ -42,6 +44,5 @@ public class ChatRoom {
         messages.remove(message);
         message.setChatRoom(null);
     }
-
 
 }

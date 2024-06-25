@@ -11,7 +11,7 @@ import java.util.Date;
 @Setter
 @Getter
 @Entity
-public class Message {
+public class Message{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,4 +48,5 @@ public class Message {
         this.chatRoom = chatRoom;
         this.createdAt = date;
     }
+
 }

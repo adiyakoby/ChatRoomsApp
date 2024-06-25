@@ -7,11 +7,10 @@ import lombok.Getter;
 import lombok.Setter;
 import java.util.Date;
 
-
 @Setter
 @Getter
 @Entity
-public class User  {
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -33,5 +32,6 @@ public class User  {
         this.createdAt = new Date();
         this.role = "ROLE_USER"; // default is user
     }
+
 
 }

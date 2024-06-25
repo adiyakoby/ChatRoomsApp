@@ -26,5 +26,8 @@ public class MessageController {
 
         return new Message(message.getText(), user, chatRoomRepository.findByName("Home"), time); // String message, User user, ChatRoom chatRoom, Date date
     }
-
+/*    public MessageDTO send(MessageDTO message) throws Exception {
+        String time = new SimpleDateFormat("HH:mm").format(new Date());
+        return new MessageDTO(message.getFrom(), message.getText(), time);
+    }*/
 }
