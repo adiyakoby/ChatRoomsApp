@@ -30,6 +30,12 @@ public class MainController {
         return "signup";
     }
 
+    @GetMapping("/client")
+    public String client(Model model) {
+        model.addAttribute("user", new User());
+        return "client2";
+    }
+
 
     @GetMapping("/chatroom")
     public String chatroom() {
