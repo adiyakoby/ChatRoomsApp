@@ -14,7 +14,8 @@
         <a th:href="@{/login}" class="btn btn-primary">Login</a>
         <a th:href="@{/signup}" class="btn btn-primary">Signup</a>
     </div>
-    <div sec:authorize="isAuthenticated()" >
+    <div sec:authorize="isAuthenticated()">
+
         Logged user: <span sec:authentication="name">?</span> |
         Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
         <form th:action="@{/logout}" method="post" style="display:inline">

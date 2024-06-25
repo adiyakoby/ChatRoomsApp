@@ -26,7 +26,7 @@ public class SetupData {
     public void init() {
         initUsers();
         initChatRoom();
-        initMessages();
+//        initMessages();
     }
 
     private void initUsers() {
@@ -49,10 +49,10 @@ public class SetupData {
         System.out.println("Chat room 'Home' created successfully.");
     }
 
-    private void initMessages() {
-        messageService.registerNewMessage("Hello from system", "admin", "Home");
-        messageService.registerNewMessage("Welcome to the chat room!", "admin", "Home");
-        System.out.println("Messages registered successfully.");
-
-    }
+//    private void initMessages() {
+//        messageService.registerNewMessage("Hello from system", "admin", "Home");
+//        messageService.registerNewMessage("Welcome to the chat room!", "admin", "Home");
+//        System.out.println("Messages registered successfully.");
+//
+//    }
 }

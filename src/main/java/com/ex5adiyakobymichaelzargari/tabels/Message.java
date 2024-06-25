@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Setter
@@ -24,10 +25,11 @@ public class Message {
     @JoinColumn(name = "user_id")
     private User user;
 
+
     @Getter
     @Setter
     @Column(name = "created_at", updatable = false)
-    private java.util.Date createdAt;
+    private String createdAt;
 
     @ManyToOne
     @JoinColumn(name = "chat_room_id", nullable = false)
@@ -37,13 +39,13 @@ public class Message {
 
 
     public Message(){
-        this.createdAt = new Date();
+        this.createdAt = new SimpleDateFormat("HH:mm").format(new Date());
     }
 
-    public Message(String message, User user, ChatRoom chatRoom) {
+    public Message(String message, User user, ChatRoom chatRoom, String date) {
         this.message = message;
         this.user = user;
         this.chatRoom = chatRoom;
-        this.createdAt = new Date();
+        this.createdAt = date;
     }
 }

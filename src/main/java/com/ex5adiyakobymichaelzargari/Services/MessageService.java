@@ -5,6 +5,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,7 +30,8 @@ public class MessageService {
         } else if (user == null) {
             throw new EntityNotFoundException("User Not Found");
         }
-        Message message = new Message(msg, user, chatRoom);
+        String time = new SimpleDateFormat("HH:mm").format(new Date());
+        Message message = new Message(msg, user, chatRoom, time);
         messageRepository.save(message);
     }
 
