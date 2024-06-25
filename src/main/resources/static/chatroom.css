@@ -1,0 +1,29 @@
+body {
+    background-color: #f8f9fa;
+}
+.chat-container {
+    margin-top: 20px;
+}
+.chat-box {
+    height: 500px;
+    overflow-y: scroll;
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+.chat-message {
+    padding: 10px;
+    border-bottom: 1px solid #ced4da;
+}
+.chat-message:last-child {
+    border-bottom: none;
+}
+.message-input {
+    display: flex;
+}
+.message-input input {
+    flex-grow: 1;
+    margin-right: 10px;
+}
