@@ -46,10 +46,6 @@ public class MessageController {
         User user = userRepository.findByUsername(message.getFrom());
 
         chatRoomService.addMessageToChatRoom(user, "Home", message.getText(), time);
-//        System.out.println(chatRoomService.getAllMessagesByChatRoom(1L));
-
-//        messageService.registerNewMessage(message.getText(), message.getFrom(), "Home");
-//        chatRoomRepository.findByName("Home").addMessage(new Message(message.getText(), user, chatRoomRepository.findByName("Home"), time));
-        return new MessageDTO(message.getFrom(), message.getText());
+        return new MessageDTO(message.getFrom(), message.getText(), time);
     }
 }
