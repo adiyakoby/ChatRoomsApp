@@ -28,12 +28,8 @@ public class UserService {
         if (userRepository.findByUsername(user.getUsername()) != null) {
             return null;
         }
-        User newUser = new User();
-        newUser.setUsername(user.getUsername());
-        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        newUser.setRole(user.getRole());
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(newUser);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
 }

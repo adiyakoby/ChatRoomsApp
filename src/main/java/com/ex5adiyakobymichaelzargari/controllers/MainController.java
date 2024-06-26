@@ -1,5 +1,7 @@
 package com.ex5adiyakobymichaelzargari.controllers;
 
+import com.ex5adiyakobymichaelzargari.Principals.MyUserPrincipal;
+import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
 import com.ex5adiyakobymichaelzargari.tabels.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,10 +10,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @Controller
 public class MainController {
 
     private static Logger logger = LoggerFactory.getLogger(MainController.class);
+    private final ChatRoomService chatRoomService;
+
+    public MainController(ChatRoomService chatRoomService) {
+        this.chatRoomService = chatRoomService;
+    }
 
     /** Home page. */
     @RequestMapping("/")
@@ -38,8 +47,11 @@ public class MainController {
 
 
     @GetMapping("/chatroom")
-    public String chatroom() {
-        return "chatroom";
+    public String chatroom(Principal principal, Model model) {
+        if (principal != null) {
+            model.addAttribute("username", principal.getName());
+        }
+       return "chatroom";
     }
 
 

@@ -27,7 +27,6 @@
             //setConnected(true);
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/messages', (greeting) => {
-                console.log(greeting);
                 showMessageOutput(JSON.parse(greeting.body));
             });
         };
@@ -59,22 +58,24 @@
             console.log('Disconnected');
         }
 
-        function sendMessage() {
-/*            const from = document.getElementById('from').value;
-            console.log(from);*/
+        async function sendMessage() {
+            const from = document.getElementById('username').value.trim();
             const msgInput = document.getElementById('text');
-            const text = msgInput.value;
+            stompClient.publish({destination: '/app/chat', body: JSON.stringify(
+                {'from': from, 'text': msgInput.value.trim()})}
+            );
             msgInput.value = '';
-            stompClient.publish({destination: '/app/chat', body: JSON.stringify({'from': "michael", 'text': text})});
+
+            const data = await fetch("/api/Messages/Home");
+            console.log(JSON.parse(JSON.parse(data)));
         }
 
 
         function showMessageOutput(messageOutput) {
-            console.log(messageOutput);
-            var response = document.getElementById('responseBody');
+            let response = document.getElementById('responseBody');
             response.innerHTML +=
                 `<div class="chat-message">
-                       <strong>${messageOutput.user.username}:</strong> ${messageOutput.message} (${messageOutput.createdAt})
+                       <strong>${messageOutput.from}:</strong> ${messageOutput.text}
                  </div>`;
         }
 
@@ -86,6 +87,7 @@
 </head>
 <body>
 <div class="container chat-container">
+
     <h1 class="text-center">Welcome to the Chat Room</h1>
     <div sec:authorize="isAuthenticated()" class="mb-3 text-center">
         Logged user: <span sec:authentication="name">?</span> |
@@ -95,12 +97,6 @@
         </form>
     </div>
     <div class="chat-box">
-        <div class="chat-message">
-            <strong>User1:</strong> Hello!
-        </div>
-        <div class="chat-message">
-            <strong>User2:</strong> Hi, how are you?
-        </div>
         <div id = "responseBody"></div><!-- Additional messages will go here -->
     </div>
     <div class="message-input">
@@ -110,6 +106,7 @@
     <div class="text-center mt-3">
         <a href="/" class="btn btn-secondary">Back to Home Page</a>
     </div>
+    <input id="username" th:value="*{username}"  hidden>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>

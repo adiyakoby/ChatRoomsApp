@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,9 +24,11 @@ public class ChatRoom {
 
     private String description;
 
-    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Message> messages;
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+    private List<Message> messages = new ArrayList<>();
+
+
+
 
     public ChatRoom() {
     }
@@ -44,5 +47,6 @@ public class ChatRoom {
         messages.remove(message);
         message.setChatRoom(null);
     }
+
 
 }

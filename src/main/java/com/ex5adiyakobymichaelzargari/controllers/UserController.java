@@ -32,7 +32,7 @@ public class UserController {
         // validate the object and get the errors
         if (result.hasErrors()) {
             // errors MUST be displayed in the view and not just printed to the console
-            System.out.println("validation errors: " + result.getAllErrors());
+//            System.out.println("validation errors: " + result.getAllErrors());
             model.addAttribute("errors", result.getAllErrors());
             return "signup";
         }

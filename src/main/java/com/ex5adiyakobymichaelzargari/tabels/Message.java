@@ -21,21 +21,18 @@ public class Message{
     @NotEmpty(message = "message is mandatory field")
     private String message;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
-
-    @Getter
-    @Setter
     @Column(name = "created_at", updatable = false)
     private String createdAt;
+
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "chat_room_id", nullable = false)
     private ChatRoom chatRoom;
-
-
 
 
     public Message(){
