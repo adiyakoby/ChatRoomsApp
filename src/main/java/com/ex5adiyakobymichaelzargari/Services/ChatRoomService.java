@@ -57,9 +57,12 @@ public class ChatRoomService {
 //        return message;
 //    }
 
-    @Transactional(readOnly = true)
+/*    @Transactional(readOnly = true)
     public List<Message> getAllMessagesByChatRoom(Long chatRoomId) {
         return chatRoomRepository.findMessagesById(chatRoomId);
+    }*/
+    public List<Message> getAllMessagesByChatRoom(String chatRoomName) {
+        return chatRoomRepository.findByName(chatRoomName).getMessages();
     }
 
 }
