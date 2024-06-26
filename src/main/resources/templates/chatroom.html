@@ -66,8 +66,8 @@
             );
             msgInput.value = '';
 
-            const data = await fetch("/api/Messages/Home");
-            console.log(JSON.parse(JSON.parse(data)));
+/*            const data = await fetch("/api/Messages/Home");
+            console.log(JSON.parse(JSON.parse(data)));*/
         }
 
 
@@ -97,6 +97,11 @@
         </form>
     </div>
     <div class="chat-box">
+        <div th:each = "message : ${messages}">
+            <div class="chat-message">
+                <strong th:text="${message.user.username}">User</strong>: <span th:text="${message.message}"></span>
+            </div>
+        </div>
         <div id = "responseBody"></div><!-- Additional messages will go here -->
     </div>
     <div class="message-input">

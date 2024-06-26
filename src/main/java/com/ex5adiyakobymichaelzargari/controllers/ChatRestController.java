@@ -1,3 +1,4 @@
+/*
 package com.ex5adiyakobymichaelzargari.controllers;
 
 
@@ -14,7 +15,7 @@ import java.util.List;
 
 
 @RestController()
-@RequestMapping(value="/api")
+@RequestMapping("/api")
 public class ChatRestController {
 
     @Autowired
@@ -23,9 +24,17 @@ public class ChatRestController {
     @Autowired
     ChatRoomRepository chatRoomRepository;
 
-    @GetMapping(value="/Messages/{chatRoomName}")
-    public List<Message> getAllMessages(@PathVariable String chatRoomName) {
-        System.out.println("[LOG] : got Request for getAllMessages()");
-        return chatRoomService.getAllMessagesByChatRoom(chatRoomRepository.findByName(chatRoomName).getId());
+    @GetMapping(value="/Chat")
+    public String getAllChatRooms() {
+        return "[LOG] : in chat controller";
     }
+
+*/
+/*    @GetMapping(value="/Messages/{chatRoomName}")
+    public List<Message> getAllMessages(@PathVariable final String chatRoomName) {
+        System.out.println("[LOG] : got Request for getAllMessages()");
+        return
+    }*//*
+
 }
+*/

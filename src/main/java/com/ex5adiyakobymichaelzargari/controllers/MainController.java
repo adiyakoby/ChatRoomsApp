@@ -1,22 +1,28 @@
 package com.ex5adiyakobymichaelzargari.controllers;
 
-import com.ex5adiyakobymichaelzargari.Principals.MyUserPrincipal;
+import com.ex5adiyakobymichaelzargari.tabels.ChatRoomRepository;
 import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
+import com.ex5adiyakobymichaelzargari.tabels.Message;
 import com.ex5adiyakobymichaelzargari.tabels.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class MainController {
 
     private static Logger logger = LoggerFactory.getLogger(MainController.class);
     private final ChatRoomService chatRoomService;
+
+    @Autowired
+    public ChatRoomRepository chatRoomRepository;
 
     public MainController(ChatRoomService chatRoomService) {
         this.chatRoomService = chatRoomService;
@@ -49,7 +55,10 @@ public class MainController {
     @GetMapping("/chatroom")
     public String chatroom(Principal principal, Model model) {
         if (principal != null) {
+            List<Message> messages= chatRoomService.getAllMessagesByChatRoom("Home"); //chatRoomRepository.findByName("Home").getMessages();
             model.addAttribute("username", principal.getName());
+            model.addAttribute("messages", messages);
+            System.out.println(messages);
         }
        return "chatroom";
     }
