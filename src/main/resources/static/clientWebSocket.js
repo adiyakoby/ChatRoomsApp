@@ -9,12 +9,14 @@ import * as StompJs from "@stomp/stompjs";
     const userMessage = document.getElementById('user-message-content');
     const responseBody = document.getElementById('responseBody');
     const chatBody = document.getElementById('chat');
+    const newChatRoomName = document.getElementById('new-chatroom-name');
 
     function init() {
         connect();
         chatBody.scrollTop = chatBody.scrollHeight;
         document.getElementById("send-message").addEventListener("click",sendMessage);
     }
+
     const stompClient = new StompJs.Client({
         brokerURL: '/chat'
     });
@@ -46,7 +48,7 @@ import * as StompJs from "@stomp/stompjs";
     }
 
     function sendMessage() {
-
+        console.log("send message");
         stompClient.publish({destination: '/app/chat', body: JSON.stringify(
                 {'from': userName.value.trim(), 'text': userMessage.value.trim(), 'time': new Date().toLocaleTimeString()}
             )});
@@ -65,6 +67,7 @@ import * as StompJs from "@stomp/stompjs";
         chatBody.scrollTop = chatBody.scrollHeight;
 
     }
+
 
 
 })();

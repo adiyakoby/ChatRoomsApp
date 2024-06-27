@@ -10,6 +10,7 @@ public class MessageDTO {
     private String text;
     private String time;
 
+
     MessageDTO() {}
 
     public MessageDTO(String from, String text) {

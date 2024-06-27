@@ -1,5 +1,6 @@
 package com.ex5adiyakobymichaelzargari.controllers;
 
+import com.ex5adiyakobymichaelzargari.tabels.ChatRoom;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoomRepository;
 import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
 import com.ex5adiyakobymichaelzargari.tabels.Message;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -45,21 +47,20 @@ public class MainController {
         return "signup";
     }
 
-    @GetMapping("/client")
-    public String client(Model model) {
-        model.addAttribute("user", new User());
-        return "client2";
-    }
 
-
-    @GetMapping("/chatroom")
-    public String chatroom(Principal principal, Model model) {
+    @GetMapping("/chatroom/{id}")
+    public String chatroom(Principal principal, Model model, @PathVariable Long id) {
         if (principal != null) {
-            List<Message> messages= chatRoomService.getAllMessagesByChatRoom("Home"); //chatRoomRepository.findByName("Home").getMessages();
+            List<Message> messages = chatRoomService.getAllMessagesByChatRoom(id);
+//            List<Message> messages = chatRoomService.getAllMessagesByChatRoom("Home"); //chatRoomRepository.findByName("Home").getMessages();
             model.addAttribute("username", principal.getName());
             model.addAttribute("messages", messages);
-            System.out.println(messages);
+            model.addAttribute("chatRoom", new ChatRoom());
+            model.addAttribute("currentChat", chatRoomRepository.findById(id).get());
+            model.addAttribute("chatRoomsList", chatRoomRepository.findAll());
+
         }
+
        return "chatroom";
     }
 

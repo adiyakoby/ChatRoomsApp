@@ -1,21 +1,17 @@
-/*
+
 package com.ex5adiyakobymichaelzargari.controllers;
 
 
 import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
+import com.ex5adiyakobymichaelzargari.tabels.ChatRoom;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoomRepository;
-import com.ex5adiyakobymichaelzargari.tabels.Message;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 
-@RestController()
-@RequestMapping("/api")
+
+@Controller
 public class ChatRestController {
 
     @Autowired
@@ -24,17 +20,12 @@ public class ChatRestController {
     @Autowired
     ChatRoomRepository chatRoomRepository;
 
-    @GetMapping(value="/Chat")
-    public String getAllChatRooms() {
-        return "[LOG] : in chat controller";
+    @PostMapping("/newChatRoom")
+    public String newChatRoom(ChatRoom chatRoom) {
+        System.out.println("New ChatRoom: " + chatRoom.getName());
+        chatRoomRepository.save(chatRoom);
+        return "redirect:/chatroom/" + chatRoom.getId();
     }
 
-*/
-/*    @GetMapping(value="/Messages/{chatRoomName}")
-    public List<Message> getAllMessages(@PathVariable final String chatRoomName) {
-        System.out.println("[LOG] : got Request for getAllMessages()");
-        return
-    }*//*
-
 }
-*/
+

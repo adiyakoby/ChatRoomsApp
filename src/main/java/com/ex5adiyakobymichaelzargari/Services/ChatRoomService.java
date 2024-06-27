@@ -34,7 +34,11 @@ public class ChatRoomService {
     }
 
     public ChatRoom getChatRoomById(Long id) {
-        return chatRoomRepository.findById(id).orElse(null);
+        ChatRoom chatRoom = chatRoomRepository.findById(id).orElse(null);
+        if (chatRoom == null) {
+            return chatRoomRepository.findById(1L).orElse(null);
+        }
+        return chatRoom;
     }
 
     public void addMessageToChatRoom(User user, String chatRoomName, String text, String time) {
@@ -61,6 +65,14 @@ public class ChatRoomService {
     public List<Message> getAllMessagesByChatRoom(Long chatRoomId) {
         return chatRoomRepository.findMessagesById(chatRoomId);
     }*/
+
+    public List<Message> getAllMessagesByChatRoom(Long id) {
+        ChatRoom chatroom = chatRoomRepository.findById(id).orElse(null);
+        if (chatroom != null) {
+            return chatroom.getMessages();
+        }
+        return null;
+    }
     public List<Message> getAllMessagesByChatRoom(String chatRoomName) {
         return chatRoomRepository.findByName(chatRoomName).getMessages();
     }

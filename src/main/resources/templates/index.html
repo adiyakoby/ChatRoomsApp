@@ -21,7 +21,8 @@
         <form th:action="@{/logout}" method="post" style="display:inline">
             <input type="submit" value="Logout" class="btn btn-danger"/>
         </form>
-        <a th:href="@{/chatroom}" class="btn btn-primary">Enter ChatRoom</a>
+
+        <a th:href="@{/chatroom/{id}(id=${1})}" class="btn btn-primary">Enter ChatRoom</a>
     </div>
 
 

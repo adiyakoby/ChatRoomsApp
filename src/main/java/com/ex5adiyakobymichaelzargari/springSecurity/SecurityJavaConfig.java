@@ -23,9 +23,10 @@ public class SecurityJavaConfig {
                 .cors(withDefaults())
                 .csrf(withDefaults())
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/*").permitAll()
-//                        .requestMatchers( "/", "/error", "/403", "/login","/static", "/signup", "/client").permitAll()
-//                                .requestMatchers( "/chatroom" ).hasRole("USER")
+                        .requestMatchers( "/", "/error", "/403", "/login","/static/**", "/signup").permitAll()
+                        .requestMatchers( "/chatroom/**").hasAnyRole("USER", "ADMIN")
+                        .anyRequest().authenticated()
+
 
                 )
                 .formLogin((form) -> form
