@@ -1,0 +1,17 @@
+{
+  "name": "ex5-adi-yakoby-michael-zargari",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Solange-s-Courses/ex5-spring-neviim-ex5_adi_yakoby_michael_zargari.git"
+  },
+  "private": true,
+  "dependencies": {
+    "@stomp/stompjs": "^7.0.0"
+  }
+}

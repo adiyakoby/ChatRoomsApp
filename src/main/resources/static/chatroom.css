@@ -1,32 +1,32 @@
-body {
-    background-color: #f8f9fa;
-}
-.chat-container {
-    margin-top: 20px;
-}
-.chat-box {
-    height: 500px;
-    overflow-y: scroll;
-    background-color: #ffffff;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    padding: 15px;
-    margin-bottom: 15px;
-}
-.chat-message {
-    padding: 10px;
-    border-bottom: 1px solid #ced4da;
-}
-.chat-message:last-child {
-    border-bottom: none;
-}
-.message-input {
-    display: flex;
-}
-.message-input input {
-    flex-grow: 1;
-    margin-right: 10px;
-}
+/*body {*/
+/*    background-color: #f8f9fa;*/
+/*}*/
+/*.chat-container {*/
+/*    margin-top: 20px;*/
+/*}*/
+/*.chat-box {*/
+/*    height: 500px;*/
+/*    overflow-y: scroll;*/
+/*    background-color: #ffffff;*/
+/*    border: 1px solid #ced4da;*/
+/*    border-radius: 0.25rem;*/
+/*    padding: 15px;*/
+/*    margin-bottom: 15px;*/
+/*}*/
+/*.chat-message {*/
+/*    padding: 10px;*/
+/*    border-bottom: 1px solid #ced4da;*/
+/*}*/
+/*.chat-message:last-child {*/
+/*    border-bottom: none;*/
+/*}*/
+/*.message-input {*/
+/*    display: flex;*/
+/*}*/
+/*.message-input input {*/
+/*    flex-grow: 1;*/
+/*    margin-right: 10px;*/
+/*}*/
 /* !* Custom styling *!*/
 /*body {*/
 /*    padding: 20px;*/
@@ -64,3 +64,50 @@ body {
 /*.gfg-blue:hover{*/
 /*    color:white;*/
 /*}*/
+
+    /* Custom styling */
+body {
+    padding: 20px;
+}
+.chat-container {
+    max-width: 600px;
+    margin: auto;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.chat-box {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+.chat-message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    word-wrap: break-word;
+}
+.outgoing-message {
+    text-align: right;
+    background-color: #b3d9ff;
+    color: white;
+}
+.incoming-message {
+    text-align: left;
+    background-color: #a8e6cf;
+    color: white;
+}
+.message-input {
+    display: flex;
+    gap: 10px;
+}
+.message-input input {
+    flex-grow: 1;
+}
+.chat-box {
+    max-height: 400px; /* Set the maximum height for the chat box */
+    overflow-y: auto; /* Enable vertical scrolling when content exceeds the height */
+
+}
+
