@@ -62,7 +62,7 @@ import * as StompJs from "@stomp/stompjs";
 
     function showMessageOutput(messageOutput) {
 
-        let messageClass = messageOutput.from === userName ? 'incoming-message' : 'outgoing-message' ;
+        let messageClass = messageOutput.from === userName.value.trim() ?'outgoing-message': 'incoming-message' ;
 
         responseBody.innerHTML +=
             `<div class="chat-message ${messageClass}">
