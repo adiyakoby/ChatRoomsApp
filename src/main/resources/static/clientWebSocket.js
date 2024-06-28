@@ -18,6 +18,21 @@ import * as StompJs from "@stomp/stompjs";
         document.getElementById("send-message").addEventListener("click",sendMessage);
     }
 
+    let userColorMap = {}; // Object to store user colors dynamically
+
+    // Array of predefined colors for users
+    const USER_COLORS = [
+        "#007bff", "#28a745", "#dc3545", "#ffc107", "#17a2b8", "#6610f2",
+        "#e83e8c", "#20c997", "#6f42c1", "#fd7e14", "#343a40", "#007bff",
+        "#28a745", "#dc3545", "#ffc107", "#17a2b8", "#6610f2", "#e83e8c",
+        "#20c997", "#6f42c1", "#fd7e14", "#343a40", "#007bff", "#28a745",
+        "#dc3545", "#ffc107", "#17a2b8", "#6610f2", "#e83e8c", "#20c997",
+        "#6f42c1", "#fd7e14", "#343a40", "#007bff", "#28a745", "#dc3545",
+        "#ffc107", "#17a2b8", "#6610f2", "#e83e8c", "#20c997", "#6f42c1",
+        "#fd7e14", "#343a40", "#007bff", "#28a745", "#dc3545", "#ffc107",
+        "#17a2b8", "#6610f2", "#e83e8c", "#20c997", "#6f42c1", "#fd7e14"
+    ];
+
     const stompClient = new StompJs.Client({
         brokerURL: '/chat'
     });
@@ -64,13 +79,30 @@ import * as StompJs from "@stomp/stompjs";
 
         let messageClass = messageOutput.from === userName.value.trim() ?'outgoing-message': 'incoming-message' ;
 
+        // Assign color based on whether the user is regular or not
+        let userColor = userColorMap[messageOutput.from];
+        if (!userColor) {
+            // Generate a random color for non-regular users
+            userColor = getRandomColor(messageOutput.from);
+            userColorMap[messageOutput.from] = userColor;
+        }
+
         responseBody.innerHTML +=
-            `<div class="chat-message ${messageClass}">
-                    <div><strong>${messageOutput.from}</strong> <span class="text-muted" style="font-size: smaller;">${messageOutput.time}</span></div>
-                    <div>${messageOutput.text}</div>
-                </div>`;
+            `<div class="chat-message ${messageClass}" style="background-color: ${userColor}; color: #fff;">
+                <div><strong>${messageOutput.from}</strong> <span class="text-muted" style="font-size: smaller;">${messageOutput.time}</span></div>
+                <div>${messageOutput.text}</div>
+             </div>`;
         chatBody.scrollTop = chatBody.scrollHeight;
 
+    }
+
+    function getRandomColor(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = str.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        const index = Math.abs(hash) % USER_COLORS.length;
+        return USER_COLORS[index];
     }
 
 
