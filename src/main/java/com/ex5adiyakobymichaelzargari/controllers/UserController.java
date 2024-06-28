@@ -1,6 +1,7 @@
 package com.ex5adiyakobymichaelzargari.controllers;
 
 import com.ex5adiyakobymichaelzargari.Services.UserService;
+import com.ex5adiyakobymichaelzargari.tabels.UserRepository;
 import org.springframework.ui.Model;
 import com.ex5adiyakobymichaelzargari.tabels.User;
 import jakarta.validation.Valid;
@@ -17,11 +18,17 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping("/signup")
     public String addUser(@Valid User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("errors", result.getAllErrors());
+            return "signup";
+        }
+        else if (userRepository.findByUsername(user.getUsername()) != null) {
+            model.addAttribute("errorSignUp", "Username already exists");
             return "signup";
         }
         userService.registerNewUser(user);
