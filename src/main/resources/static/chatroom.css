@@ -1,45 +1,102 @@
+/*body {*/
+/*    padding: 20px;*/
+/*}*/
+/*.chat-container {*/
+/*    max-width: 600px;*/
+/*    margin: auto;*/
+/*    background: #313135;*/
+/*    padding: 20px;*/
+/*    border-radius: 10px;*/
+/*    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+/*}*/
+/*.chat-box {*/
+/*    max-height: 400px;*/
+/*    overflow-y: auto;*/
+/*    margin-bottom: 20px;*/
+/*}*/
+/*.chat-message {*/
+/*    margin-bottom: 10px;*/
+/*    padding: 10px;*/
+/*    border-radius: 5px;*/
+/*    word-wrap: break-word;*/
+/*}*/
+/*.outgoing-message {*/
+/*    text-align: right;*/
+/*    background-color: #b3d9ff;*/
+/*    color: white;*/
+/*}*/
+/*.incoming-message {*/
+/*    text-align: left;*/
+/*    background-color: #a8e6cf;*/
+/*    color: white;*/
+/*}*/
+/*.message-input {*/
+/*    display: flex;*/
+/*    gap: 10px;*/
+/*}*/
+/*.message-input input {*/
+/*    flex-grow: 1;*/
+/*}*/
+/*.chat-box {*/
+/*    max-height: 400px; !* Set the maximum height for the chat box *!*/
+/*    overflow-y: auto; !* Enable vertical scrolling when content exceeds the height *!*/
+
+/*}*/
+
 body {
-    padding: 20px;
+    background-color: #f0f0f0;
+    padding-top: 20px;
 }
-.chat-container {
-    max-width: 600px;
-    margin: auto;
-    background: #313135;
+.container {
+    max-width: 1200px;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+}
 .chat-box {
-    max-height: 400px;
+    flex-grow: 1;
     overflow-y: auto;
-    margin-bottom: 20px;
+    background-color: #e9ecef;
+    padding: 20px;
+    border-radius: 10px;
 }
 .chat-message {
     margin-bottom: 10px;
     padding: 10px;
-    border-radius: 5px;
-    word-wrap: break-word;
+    border-radius: 10px;
 }
 .outgoing-message {
-    text-align: right;
-    background-color: #b3d9ff;
-    color: white;
+    background-color: #d1ecf1;
+    align-self: flex-end;
 }
 .incoming-message {
-    text-align: left;
-    background-color: #a8e6cf;
-    color: white;
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
 }
 .message-input {
     display: flex;
-    gap: 10px;
+    margin-top: 10px;
 }
 .message-input input {
     flex-grow: 1;
+    border-radius: 10px 0 0 10px;
 }
-.chat-box {
-    max-height: 400px; /* Set the maximum height for the chat box */
-    overflow-y: auto; /* Enable vertical scrolling when content exceeds the height */
-
+.message-input button {
+    border-radius: 0 10px 10px 0;
 }
-
+.welcome-header {
+    background: linear-gradient(to right, #007bff, #00c6ff);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+.welcome-header h1 {
+    margin: 0;
+}
