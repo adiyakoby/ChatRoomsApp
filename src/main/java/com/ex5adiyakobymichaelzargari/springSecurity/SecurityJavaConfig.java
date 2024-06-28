@@ -24,7 +24,7 @@ public class SecurityJavaConfig {
                 .csrf(withDefaults())
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers( "/", "/error", "/403", "/login","/static/**", "/signup").permitAll()
-                        .requestMatchers( "/chatroom/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers( "/chatroom/**", "/newChatRoom").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated()
 
 

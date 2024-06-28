@@ -11,10 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -39,13 +37,22 @@ public class MainController {
     /** Home page. */
     @RequestMapping("/")
     public String index() {
+
         return "index";
     }
 
     @GetMapping("/login")
     public String login() {
+
         return "login";
     }
+
+    @GetMapping("/newChatForm")
+    public String newChatForm(Model model) {
+        model.addAttribute("chatRoom", new ChatRoom());
+        return "newChatForm";
+    }
+
 
     @GetMapping("/signup")
     public String signup(Model model) {
@@ -86,7 +93,6 @@ public class MainController {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleException(Exception ex, Model model) {
 
-        //logger.error("Exception during execution of SpringSecurity application", ex);
         String errorMessage = (ex != null ? ex.getMessage() : "Unknown error");
 
         model.addAttribute("errorMessage", errorMessage);

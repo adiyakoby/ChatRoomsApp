@@ -56,19 +56,6 @@
 
                     <button type="submit" class="btn btn-primary mt-3">Add ChatRoom</button>
                 </form>
-            <form th:action="@{/newChatRoom}" method="post" th:object="${chatRoom}">
-                <div class="form-group mt-3">
-                    <label for="name">Chat Room Name</label>
-                    <input type="text" class="form-control" id="name2" th:field="*{name}" placeholder="Enter chat room name">
-                    <small class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
-                </div>
-                <div class="form-group mt-2">
-                    <label for="description">Description</label>
-                    <input type="text" class="form-control" id="description" th:field="*{description}" placeholder="Enter chat room description">
-                    <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
-                </div>
-                <button type="submit" class="btn btn-primary mt-3">Create Chat Room</button>
-            </form>
         </div>
         <div class="col-md-9 chat-container">
             <div id="chat" class="chat-box d-flex flex-column">
@@ -86,8 +73,9 @@
             </div>
         </div>
     </div>
+    <a th:href="@{/templates/newChatForm.html}" class="btn btn-primary">Add New ChatRoom</a>
     <div class="text-center mt-3">
-        <a href="/" class="btn btn-secondary">Back to Home Page</a>
+        <a href="/static" class="btn btn-secondary">Back to Home Page</a>
     </div>
     <input id="username" th:value="*{#authentication.name}" hidden>
     <input id="chat-room-id" th:value="*{currentChat.id}" hidden>

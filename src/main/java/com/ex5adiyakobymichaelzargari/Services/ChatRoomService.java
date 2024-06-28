@@ -30,6 +30,7 @@ public class ChatRoomService {
     }
 
     public List<ChatRoom> getAllChatRooms() {
+
         return chatRoomRepository.findAll();
     }
 
@@ -50,21 +51,6 @@ public class ChatRoomService {
         }
     }
 
-//    public Message addMessageToChatRoom(User user, String chatRoomName, String content, String time) { // user, "Home", message.getText()
-//        ChatRoom chatRoom = chatRoomRepository.findByName(chatRoomName); // need to add CHECK if not FOUND
-//
-//        Message message = new Message(content, user, chatRoom, time);
-//        chatRoom.addMessage(message);
-////        System.out.println(chatRoomRepository.findMessagesById(1L));
-//        messageRepository.save(message);
-//
-//        return message;
-//    }
-
-/*    @Transactional(readOnly = true)
-    public List<Message> getAllMessagesByChatRoom(Long chatRoomId) {
-        return chatRoomRepository.findMessagesById(chatRoomId);
-    }*/
 
     public List<Message> getAllMessagesByChatRoom(Long id) {
         ChatRoom chatroom = chatRoomRepository.findById(id).orElse(null);
