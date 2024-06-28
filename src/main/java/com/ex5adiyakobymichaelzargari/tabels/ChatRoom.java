@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Getter
@@ -24,9 +26,11 @@ public class ChatRoom {
 
     private String description;
 
-    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Message> messages = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "chatRooms")
+    private Set<User> users = new HashSet<>();
 
 
 
@@ -37,6 +41,7 @@ public class ChatRoom {
         this.name = name;
         this.description = description;
     }
+
 
     public void addMessage(Message message) {
         messages.add(message);

@@ -1,14 +1,14 @@
 package com.ex5adiyakobymichaelzargari.controllers;
 
-import com.ex5adiyakobymichaelzargari.tabels.ChatRoom;
-import com.ex5adiyakobymichaelzargari.tabels.ChatRoomRepository;
+import com.ex5adiyakobymichaelzargari.Principals.MyUserPrincipal;
+import com.ex5adiyakobymichaelzargari.Services.UserService;
+import com.ex5adiyakobymichaelzargari.tabels.*;
 import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
-import com.ex5adiyakobymichaelzargari.tabels.Message;
-import com.ex5adiyakobymichaelzargari.tabels.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,7 +24,13 @@ public class MainController {
     private final ChatRoomService chatRoomService;
 
     @Autowired
-    public ChatRoomRepository chatRoomRepository;
+    private ChatRoomRepository chatRoomRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     public MainController(ChatRoomService chatRoomService) {
         this.chatRoomService = chatRoomService;
@@ -49,15 +55,13 @@ public class MainController {
 
 
     @GetMapping("/chatroom/{id}")
-    public String chatroom(Principal principal, Model model, @PathVariable Long id) {
+    public String chatroom(@AuthenticationPrincipal MyUserPrincipal principal, Model model, @PathVariable Long id) {
         if (principal != null) {
             List<Message> messages = chatRoomService.getAllMessagesByChatRoom(id);
-//            List<Message> messages = chatRoomService.getAllMessagesByChatRoom("Home"); //chatRoomRepository.findByName("Home").getMessages();
-//            model.addAttribute("username", principal.getName());
             model.addAttribute("messages", messages);
             model.addAttribute("chatRoom", new ChatRoom());
             model.addAttribute("currentChat", chatRoomRepository.findById(id).get());
-            model.addAttribute("chatRoomsList", chatRoomRepository.findAll());
+            model.addAttribute("chatRoomsList", userService.getUserChatRooms(principal.getUserId()));
         }
 
        return "chatroom";

@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
+
 public class MyUserPrincipal implements UserDetails {
     private final User user;
 
@@ -30,8 +31,9 @@ public class MyUserPrincipal implements UserDetails {
         return user.getUsername();
     }
 
-    public String getUserRole(){
-        return user.getRole();
+    public Long getUserId() {
+        return user.getId();
     }
-    //...
+
+
 }
