@@ -1,13 +1,10 @@
-
 package com.ex5adiyakobymichaelzargari.controllers;
-
 
 import com.ex5adiyakobymichaelzargari.Principals.MyUserPrincipal;
 import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
 import com.ex5adiyakobymichaelzargari.Services.UserService;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoom;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoomRepository;
-import com.ex5adiyakobymichaelzargari.tabels.User;
 import com.ex5adiyakobymichaelzargari.tabels.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.security.Principal;
 
 
 @Controller
@@ -29,8 +25,7 @@ public class ChatRestController {
 
     @Autowired
     UserService userService;
-    @Autowired
-    private UserRepository userRepository;
+
 
     @PostMapping("/newChatRoom")
     public String newChatRoom(@AuthenticationPrincipal MyUserPrincipal principal, ChatRoom chatRoom) {
@@ -44,7 +39,8 @@ public class ChatRestController {
     public String addChatRoom(@AuthenticationPrincipal MyUserPrincipal principal , ChatRoom chatroom, RedirectAttributes redirectAttributes) {
         ChatRoom chat = chatRoomRepository.findByName(chatroom.getName());
         if (chat == null || chat.isChatFull()) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Chat room is full. You cannot join.");
+            String errMsg = chat == null ? "chat room not found." : "Chat room is full. You cannot join." ;
+            redirectAttributes.addFlashAttribute("errorAddChatRoom", errMsg);
             return "redirect:/chatroom/" + 1;
         }
 

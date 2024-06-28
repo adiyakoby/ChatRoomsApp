@@ -56,8 +56,8 @@
 
                     <button type="submit" class="btn btn-primary mt-3">Add ChatRoom</button>
                 </form>
-                <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
-                    <p th:text="${errorMessage}"></p>
+                <div th:if="${errorAddChatRoom}" class="alert alert-danger" role="alert">
+                    <p th:text="${errorAddChatRoom}"></p>
                 </div>
         </div>
         <div class="col-md-9 chat-container">

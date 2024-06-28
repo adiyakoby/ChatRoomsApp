@@ -53,7 +53,7 @@ public class ChatRoom {
     }
 
     public boolean isChatFull() {
-        return users.size() > 50;
+        return users.size() > 2;
     }
 
 
