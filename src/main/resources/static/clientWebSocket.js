@@ -10,6 +10,7 @@ import * as StompJs from "@stomp/stompjs";
     const responseBody = document.getElementById('responseBody');
     const chatBody = document.getElementById('chat');
     const newChatRoomName = document.getElementById('new-chatroom-name');
+    const chatId = document.getElementById('chat-room-id');
 
     function init() {
         connect();
@@ -23,7 +24,8 @@ import * as StompJs from "@stomp/stompjs";
 
     stompClient.onConnect = (frame) => {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/messages', (greeting) => {
+        const chatRoomId = chatId.value.trim(); // Assuming you have a hidden field with the current chat room ID
+        stompClient.subscribe(`/topic/chatroom/${chatRoomId}`, (greeting) => {
             showMessageOutput(JSON.parse(greeting.body));
         });
     };
@@ -48,10 +50,13 @@ import * as StompJs from "@stomp/stompjs";
     }
 
     function sendMessage() {
-        console.log("send message");
-        stompClient.publish({destination: '/app/chat', body: JSON.stringify(
-                {'from': userName.value.trim(), 'text': userMessage.value.trim(), 'time': new Date().toLocaleTimeString()}
-            )});
+        const content = userMessage.value.trim();
+        if (content.length > 0) {
+            stompClient.publish({destination: '/app/chat', body: JSON.stringify(
+                    {'from': userName.value.trim(), 'text': content, chatId : chatId.value.trim()}
+                )});
+        }
+
         userMessage.value = '';
     }
 

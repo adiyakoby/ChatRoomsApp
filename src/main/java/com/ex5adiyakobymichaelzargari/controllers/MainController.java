@@ -53,12 +53,11 @@ public class MainController {
         if (principal != null) {
             List<Message> messages = chatRoomService.getAllMessagesByChatRoom(id);
 //            List<Message> messages = chatRoomService.getAllMessagesByChatRoom("Home"); //chatRoomRepository.findByName("Home").getMessages();
-            model.addAttribute("username", principal.getName());
+//            model.addAttribute("username", principal.getName());
             model.addAttribute("messages", messages);
             model.addAttribute("chatRoom", new ChatRoom());
             model.addAttribute("currentChat", chatRoomRepository.findById(id).get());
             model.addAttribute("chatRoomsList", chatRoomRepository.findAll());
-
         }
 
        return "chatroom";

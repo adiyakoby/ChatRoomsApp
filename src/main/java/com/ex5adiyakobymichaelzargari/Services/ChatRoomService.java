@@ -41,8 +41,8 @@ public class ChatRoomService {
         return chatRoom;
     }
 
-    public void addMessageToChatRoom(User user, String chatRoomName, String text, String time) {
-        ChatRoom chatRoom = chatRoomRepository.findByName(chatRoomName);
+    public void addMessageToChatRoom(User user, Long chatId, String text, String time) {
+        ChatRoom chatRoom = chatRoomRepository.findById(chatId).orElse(null);
         if (chatRoom != null) {
             Message message = new Message(text, user, chatRoom, time);
             chatRoom.addMessage(message);

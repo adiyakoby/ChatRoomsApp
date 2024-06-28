@@ -9,7 +9,6 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
-import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
@@ -33,34 +32,19 @@ public class MessageController {
     private ChatRoomService chatRoomService;
 
     @Autowired
-    SimpMessagingTemplate messagingTemplate;
+    private SimpMessagingTemplate messagingTemplate;
 
-    //    @MessageMapping("/chat")
-//    @SendTo("/topic/messages")
-//    public Message send(MessageDTO message) throws Exception {
-//        String time = new SimpleDateFormat("HH:mm").format(new Date());
-//        User user = userRepository.findByUsername(message.getFrom());
-//
-//        return new Message(message.getText(), user, chatRoomRepository.findByName("Home"), time); // String message, User user, ChatRoom chatRoom, Date date
-//    }
     @MessageMapping("/chat")
     @SendTo("/topic/messages")
-    public MessageDTO send(MessageDTO message) throws Exception {
+    public void send(MessageDTO message) throws Exception {
         String time = new SimpleDateFormat("HH:mm").format(new Date());
         User user = userRepository.findByUsername(message.getFrom());
 
-//        if (!chatRoomNames.contains(messge.chatrooName)) {
-//            chatRoomNames.add(messge.chatrooName);
-//        }
+        chatRoomService.addMessageToChatRoom(user, message.getChatId(), message.getText(), time);
+        String destination = "/topic/chatroom/" + message.getChatId();
 
-//        webSockets.forEach(
-//                webSocket -> {
-//                    if (webSocket.name === message.chatroomName) {
-//                        return new MessageDTO(message.getFrom(), message.getText(), time);
-//                    }
-//                }
-//        );
-        chatRoomService.addMessageToChatRoom(user, "Home", message.getText(), time);
-        return new MessageDTO(message.getFrom(), message.getText(), time);
+        messagingTemplate.convertAndSend(destination , new MessageDTO(message.getFrom(), message.getText(), time));
+
+//        return new MessageDTO(message.getFrom(), message.getText(), time);
     }
 }

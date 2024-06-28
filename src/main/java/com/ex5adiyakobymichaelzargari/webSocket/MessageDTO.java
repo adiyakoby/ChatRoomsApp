@@ -9,6 +9,7 @@ public class MessageDTO {
     private String from;
     private String text;
     private String time;
+    private Long chatId;
 
 
     MessageDTO() {}
