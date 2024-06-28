@@ -56,6 +56,9 @@
 
                     <button type="submit" class="btn btn-primary mt-3">Add ChatRoom</button>
                 </form>
+                <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+                    <p th:text="${errorMessage}"></p>
+                </div>
         </div>
         <div class="col-md-9 chat-container">
             <div id="chat" class="chat-box d-flex flex-column">
@@ -73,7 +76,7 @@
             </div>
         </div>
     </div>
-    <a th:href="@{/templates/newChatForm.html}" class="btn btn-primary">Add New ChatRoom</a>
+    <a th:href="@{/newChatForm}" class="btn btn-primary">Add New ChatRoom</a>
     <div class="text-center mt-3">
         <a href="/static" class="btn btn-secondary">Back to Home Page</a>
     </div>

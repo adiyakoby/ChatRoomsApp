@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 
@@ -40,11 +41,13 @@ public class ChatRestController {
     }
 
     @PostMapping("/addChatRoom")
-    public String addChatRoom(@AuthenticationPrincipal MyUserPrincipal principal , ChatRoom chatroom) {
+    public String addChatRoom(@AuthenticationPrincipal MyUserPrincipal principal , ChatRoom chatroom, RedirectAttributes redirectAttributes) {
         ChatRoom chat = chatRoomRepository.findByName(chatroom.getName());
-        if (chat == null) {
+        if (chat == null || chat.isChatFull()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Chat room is full. You cannot join.");
             return "redirect:/chatroom/" + 1;
         }
+
         userService.addChatRoomToUser(principal.getUserId(), chat.getId());
         return "redirect:/chatroom/" + chat.getId();
     }

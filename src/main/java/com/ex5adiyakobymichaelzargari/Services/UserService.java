@@ -36,6 +36,7 @@ public class UserService {
             return null;
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.addChatRoom(chatRoomRepository.findById(1L).orElse(null));
         return userRepository.save(user);
     }
 

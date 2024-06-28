@@ -52,5 +52,9 @@ public class ChatRoom {
         message.setChatRoom(null);
     }
 
+    public boolean isChatFull() {
+        return users.size() > 50;
+    }
+
 
 }
