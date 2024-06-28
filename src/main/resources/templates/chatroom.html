@@ -39,18 +39,27 @@
                     <span th:text="${room.name}">Room Name</span>
                     <div>
                         <form th:action="@{'/chatroom/' + ${room.id}}" method="get" style="display:inline">
-                            <button type="submit" class="btn btn-primary btn-sm">Join</button>
+                            <button type="submit" class="btn btn-primary btn-sm" th:disabled="${room.id} == ${currentChat.id}">Join</button>
                         </form>
                         <form th:action="@{'/deleteChatRoom/' + ${room.id}}" method="post" style="display:inline">
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            <button type="submit" class="btn btn-danger btn-sm" th:disabled="${room.name} == 'Home'">remove</button>
                         </form>
                     </div>
                 </li>
             </ul>
+                <form th:action="@{/addChatRoom}" method="post" th:object="${chatRoom}">
+                    <div class="form-group mt-3">
+                        <label for="name">Chat Room Name</label>
+                        <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter chat room name">
+                        <small class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-3">Add ChatRoom</button>
+                </form>
             <form th:action="@{/newChatRoom}" method="post" th:object="${chatRoom}">
                 <div class="form-group mt-3">
                     <label for="name">Chat Room Name</label>
-                    <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter chat room name">
+                    <input type="text" class="form-control" id="name2" th:field="*{name}" placeholder="Enter chat room name">
                     <small class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
                 </div>
                 <div class="form-group mt-2">
