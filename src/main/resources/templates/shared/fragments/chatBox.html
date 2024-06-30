@@ -1,10 +1,13 @@
 <div th:fragment="chatBox">
-    <div  class="container mt-4">
+    <div class="container mt-4">
         <div class="chat-container">
             <div id="chat" class="chat-box d-flex flex-column">
                 <div th:each="message : ${messages}">
                     <div th:class="${message.user.username == #authentication.name} ? 'chat-message outgoing-message' : 'chat-message incoming-message'">
-                        <div><strong th:text="${message.user.username}">User</strong> <span class="text-muted" style="font-size: smaller;" th:text="${message.createdAt}">Time</span></div>
+                        <div>
+                            <strong th:text="${message.user.username}">User</strong>
+                            <span class="text-muted" style="font-size: smaller;" th:text="${message.createdAt}">Time</span>
+                        </div>
                         <div th:text="${message.message}"></div>
                     </div>
                 </div>
