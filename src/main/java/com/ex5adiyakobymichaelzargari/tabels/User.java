@@ -8,6 +8,9 @@ import lombok.Setter;
 
 import java.util.*;
 
+/**
+ * User Entity, represents a user in the application.
+ */
 @Setter
 @Getter
 @Entity

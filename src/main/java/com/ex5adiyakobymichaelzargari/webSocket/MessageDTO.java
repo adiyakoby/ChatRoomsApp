@@ -3,6 +3,9 @@ package com.ex5adiyakobymichaelzargari.webSocket;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * MessageDTO is a data transfer object for chat messages.
+ */
 @Getter
 @Setter
 public class MessageDTO {

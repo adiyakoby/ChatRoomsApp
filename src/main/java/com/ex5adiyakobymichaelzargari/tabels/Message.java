@@ -8,6 +8,9 @@ import lombok.Setter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Message Entity, represents a message in the application.
+ */
 @Setter
 @Getter
 @Entity
