@@ -59,7 +59,7 @@ public class MainController {
     /** simple Error page. */
     @RequestMapping("/403")
     public String forbidden() {
-        return "403";
+        return "public/403";
     }
 
 

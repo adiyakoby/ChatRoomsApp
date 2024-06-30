@@ -35,7 +35,7 @@ public class ChatRestController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while submitting your request. Please try again.");
         }
-        return "redirect:/newChatForm";
+        return "redirect:/chatroom/newChatForm";
     }
 
     @PostMapping("/addChatRoom")
