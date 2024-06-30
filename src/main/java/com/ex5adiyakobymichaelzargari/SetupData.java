@@ -9,8 +9,6 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Set;
 
 @Component
 public class SetupData {
@@ -44,6 +42,7 @@ public class SetupData {
         test.setRole("ROLE_USER");
         test.addChatRoom(chatRoomRepository.findById(1L).orElse(null));
 
+
         userService.registerNewUser(admin);
         userService.registerNewUser(test);
     }
@@ -51,5 +50,6 @@ public class SetupData {
     private void initChatRoom() {
         chatRoomService.createChatRoom("Home", "Home chat - for everyone.", true);
     }
+
 
 }

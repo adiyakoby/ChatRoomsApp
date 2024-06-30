@@ -1,32 +1,45 @@
-<!-- fragments/users.html -->
 <div th:fragment="users">
-    <h2 class="mt-4">Registered Users</h2>
-    <table class="table table-bordered mt-3 table-striped" style="max-height: 400px; overflow-y: auto;">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Role</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="user : ${users}" th:class="${user.role == 'ROLE_ADMIN'} ? 'admin-role' : (${user.role == 'ROLE_USER'} ? 'user-role' : (${user.role == 'ROLE_BANNED'} ? 'banned-role' : ''))">
-            <td th:text="${user.id}">1</td>
-            <td th:text="${user.username}">Username</td>
-            <td th:text="${user.role}">User Role</td>
-            <td>
-                <!-- Ban User Form -->
-                <form th:action="@{'/admin/banUser/' + ${user.id}}" method="post" style="display:inline" th:unless="${user.username == 'admin' or user.role == 'ROLE_BANNED'}">
-                    <button type="submit" class="btn btn-warning btn-sm">Ban</button>
-                </form>
-                <!-- Unban User Form -->
-                <form th:action="@{'/admin/unbanUser/' + ${user.id}}" method="post" style="display:inline" th:unless="${user.username == 'admin' or user.role != 'ROLE_BANNED'}">
-                    <button type="submit" class="btn btn-success btn-sm">Unban</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+    <div class="container mt-4">
+        <h2>Registered Users</h2>
 
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search by username..." id="usersSearchInput">
+            <button class="btn btn-outline-secondary" type="button" id="usersSearchButton">Search</button>
+        </div>
+
+        <div class="table-container" style="max-height: 400px; overflow-y: auto;">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="userTableBody">
+                <tr th:each="user : ${users}" th:class="${user.role == 'ROLE_ADMIN'} ? 'admin-role' : (${user.role == 'ROLE_USER'} ? 'user-role' : (${user.role == 'ROLE_BANNED'} ? 'banned-role' : ''))">
+                    <td th:text="${user.id}">1</td>
+                    <td th:text="${user.username}">Username</td>
+                    <td th:text="${user.role}">User Role</td>
+                    <td>
+                        <form th:action="@{'/admin/banUser/' + ${user.id}}" method="post" style="display:inline" th:unless="${user.username == 'admin' or user.role == 'ROLE_BANNED'}">
+                            <button type="submit" class="btn btn-warning btn-sm">Ban</button>
+                        </form>
+                        <form th:action="@{'/admin/unbanUser/' + ${user.id}}" method="post" style="display:inline" th:unless="${user.username == 'admin' or user.role != 'ROLE_BANNED'}">
+                            <button type="submit" class="btn btn-success btn-sm">Unban</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="module">
+        import {SearchModule} from '/searchBar.js';
+        SearchModule("usersSearchInput", "usersSearchButton", "userTableBody");
+    </script>
+
+
+</div>

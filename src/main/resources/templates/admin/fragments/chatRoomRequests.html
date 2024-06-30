@@ -1,32 +1,50 @@
-<!-- fragments/chatroomRequests.html -->
 <div th:fragment="chatroomRequests">
-    <h2 class="mt-4">Chatroom Requests</h2>
-    <table class="table table-bordered mt-3">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="chatRoom : ${chatRooms}">
-            <td th:text="${chatRoom.id}">1</td>
-            <td th:text="${chatRoom.name}">Chat Room Name</td>
-            <td th:text="${chatRoom.description}">Chat Room Description</td>
-            <td>
-                <form th:action="@{'/admin/approveChatRoom/' + ${chatRoom.id}}" method="post" style="display:inline">
-                    <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                </form>
-                <form th:action="@{'/admin/disapproveChatRoom/' + ${chatRoom.id}}" method="post" style="display:inline">
-                    <button type="submit" class="btn btn-warning btn-sm">Disapprove</button>
-                </form>
-                <form th:action="@{'/admin/deleteChatRoom/' + ${chatRoom.id}}" method="post" style="display:inline">
-                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="container mt-4">
+        <h2>Chatroom Requests</h2>
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search by name..." id="chatReqSearchInput">
+            <button class="btn btn-outline-secondary" type="button" id="chatReqSearchButton">Search</button>
+        </div>
+
+        <div class="table-container" style="max-height: 400px; overflow-y: auto;">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="chatroomRequestsTableBody">
+                <tr th:each="chatRoom : ${chatRooms}">
+                    <td th:text="${chatRoom.id}">1</td>
+                    <td th:text="${chatRoom.name}">Chat Room Name</td>
+                    <td th:text="${chatRoom.description}">Chat Room Description</td>
+                    <td>
+                        <form th:action="@{'/admin/approveChatRoom/' + ${chatRoom.id}}" method="post" style="display:inline">
+                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                        </form>
+                        <form th:action="@{'/admin/disapproveChatRoom/' + ${chatRoom.id}}" method="post" style="display:inline">
+                            <button type="submit" class="btn btn-warning btn-sm">Disapprove</button>
+                        </form>
+                        <form th:action="@{'/admin/deleteChatRoom/' + ${chatRoom.id}}" method="post" style="display:inline">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="module">
+        import {SearchModule} from '/searchBar.js';
+        SearchModule("chatReqSearchInput", "chatReqSearchButton", "chatroomRequestsTableBody");
+    </script>
+
+
+
+
 </div>
