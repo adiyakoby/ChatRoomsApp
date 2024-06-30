@@ -9,15 +9,15 @@ import org.springframework.web.context.annotation.SessionScope;
 @Setter
 @Component
 @SessionScope
-public class UserDateSession {
+public class UserDataSession {
     private String username;
     private boolean isUserLoggedIn;
     private Long chatId = 1L;
 
-    public UserDateSession() {
+    public UserDataSession() {
     }
 
-    public UserDateSession(String username, boolean isUserLoggedIn, Long chatId) {
+    public UserDataSession(String username, boolean isUserLoggedIn, Long chatId) {
         this.username = username;
         this.isUserLoggedIn = isUserLoggedIn;
         this.chatId = chatId;

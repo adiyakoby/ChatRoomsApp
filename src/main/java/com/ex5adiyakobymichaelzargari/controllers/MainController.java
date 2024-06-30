@@ -3,7 +3,7 @@ package com.ex5adiyakobymichaelzargari.controllers;
 import com.ex5adiyakobymichaelzargari.Principals.MyUserPrincipal;
 
 import com.ex5adiyakobymichaelzargari.Services.UserService;
-import com.ex5adiyakobymichaelzargari.UserDateSession;
+import com.ex5adiyakobymichaelzargari.UserDataSession;
 import com.ex5adiyakobymichaelzargari.tabels.*;
 import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
 import org.slf4j.Logger;
@@ -15,30 +15,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 public class MainController {
 
-    private static Logger logger = LoggerFactory.getLogger(MainController.class);
-    private final ChatRoomService chatRoomService;
 
     @Autowired
-    private UserDateSession userDataSession;
+    private UserDataSession userDataSession;
 
-    @Autowired
-    private ChatRoomRepository chatRoomRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private UserDateSession userDateSession;
 
     public MainController(ChatRoomService chatRoomService) {
-        this.chatRoomService = chatRoomService;
     }
 
     /** Home page. */
@@ -55,24 +40,7 @@ public class MainController {
 
     @GetMapping("/login")
     public String login() {
-
         return "login";
-    }
-
-
-    @GetMapping("/adminDashboard")
-    public String adminDashboard(Model model) {
-
-        model.addAttribute("chatRooms", chatRoomService.findPendingChatRooms());
-        model.addAttribute("users", userService.findAllUsers());
-        model.addAttribute("enabledChatRooms", chatRoomService.findEnabledChatRooms());
-        return "/admin/adminDashboard";
-    }
-
-    @GetMapping("/newChatForm")
-    public String newChatForm(Model model) {
-        model.addAttribute("chatRoom", new ChatRoom());
-        return "newChatForm";
     }
 
 
@@ -80,22 +48,6 @@ public class MainController {
     public String signup(Model model) {
         model.addAttribute("user", new User());
         return "signup";
-    }
-
-
-    @GetMapping("/chatroom/{id}")
-    public String chatroom(@AuthenticationPrincipal MyUserPrincipal principal, Model model, @PathVariable Long id) {
-        if (principal != null) {
-            userDataSession.setChatId(id);
-            List<Message> messages = chatRoomService.getAllMessagesByChatRoom(id);
-            model.addAttribute("userName", userDataSession.getUsername());
-            model.addAttribute("messages", messages);
-            model.addAttribute("chatRoom", new ChatRoom());
-            model.addAttribute("currentChat", chatRoomRepository.findById(id).get());
-            model.addAttribute("chatRoomsList", userService.getUserChatRooms(principal.getUserId()));
-        }
-
-       return "chatroom";
     }
 
 
@@ -116,9 +68,7 @@ public class MainController {
     @ExceptionHandler({Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleException(Exception ex, Model model) {
-
         String errorMessage = (ex != null ? ex.getMessage() : "Unknown error");
-
         model.addAttribute("errorMessage", errorMessage);
         return "error";
     }

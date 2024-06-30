@@ -1,7 +1,7 @@
 package com.ex5adiyakobymichaelzargari.controllers;
 
 import com.ex5adiyakobymichaelzargari.Services.UserService;
-import com.ex5adiyakobymichaelzargari.UserDateSession;
+import com.ex5adiyakobymichaelzargari.UserDataSession;
 import com.ex5adiyakobymichaelzargari.tabels.UserRepository;
 import org.springframework.ui.Model;
 import com.ex5adiyakobymichaelzargari.tabels.User;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController {
 
     @Autowired
-    private UserDateSession userDateSession;
+    private UserDataSession userDataSession;
 
 
     @Autowired
@@ -35,7 +35,7 @@ public class UserController {
             return "signup";
         }
         userService.registerNewUser(user);
-        userDateSession.setUsername(user.getUsername());
+        userDataSession.setUsername(user.getUsername());
         return "index";
     }
 

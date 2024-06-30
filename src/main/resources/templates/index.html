@@ -56,7 +56,7 @@
         <a th:href="@{/newChatForm}" class="btn btn-primary ms-2">Add New ChatRoom</a>
         <!-- Admin Dashboard Link -->
         <div sec:authorize="hasRole('ROLE_ADMIN')">
-            <a th:href="@{/adminDashboard}" class="btn btn-primary ms-2">Admin Dashboard</a>
+            <a th:href="@{/admin/dashboard}" class="btn btn-primary ms-2">Admin Dashboard</a>
         </div>
     </div>
 </div>
