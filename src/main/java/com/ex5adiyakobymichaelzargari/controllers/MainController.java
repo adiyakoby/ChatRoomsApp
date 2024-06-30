@@ -1,7 +1,9 @@
 package com.ex5adiyakobymichaelzargari.controllers;
 
 import com.ex5adiyakobymichaelzargari.Principals.MyUserPrincipal;
+
 import com.ex5adiyakobymichaelzargari.Services.UserService;
+import com.ex5adiyakobymichaelzargari.UserDateSession;
 import com.ex5adiyakobymichaelzargari.tabels.*;
 import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
 import org.slf4j.Logger;
@@ -22,6 +24,9 @@ public class MainController {
     private final ChatRoomService chatRoomService;
 
     @Autowired
+    private UserDateSession userDataSession;
+
+    @Autowired
     private ChatRoomRepository chatRoomRepository;
 
     @Autowired
@@ -29,6 +34,8 @@ public class MainController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserDateSession userDateSession;
 
     public MainController(ChatRoomService chatRoomService) {
         this.chatRoomService = chatRoomService;
@@ -36,8 +43,13 @@ public class MainController {
 
     /** Home page. */
     @RequestMapping("/")
-    public String index() {
-
+    public String index(@AuthenticationPrincipal MyUserPrincipal principal, Model model){
+        if(principal != null) {
+            userDataSession.setUsername(principal.getUsername());
+            userDataSession.setUserLoggedIn(true);
+            model.addAttribute("userName", userDataSession.getUsername());
+            model.addAttribute("userCurrentChat", userDataSession.getChatId());
+        }
         return "index";
     }
 
@@ -64,7 +76,9 @@ public class MainController {
     @GetMapping("/chatroom/{id}")
     public String chatroom(@AuthenticationPrincipal MyUserPrincipal principal, Model model, @PathVariable Long id) {
         if (principal != null) {
+            userDataSession.setChatId(id);
             List<Message> messages = chatRoomService.getAllMessagesByChatRoom(id);
+            model.addAttribute("userName", userDataSession.getUsername());
             model.addAttribute("messages", messages);
             model.addAttribute("chatRoom", new ChatRoom());
             model.addAttribute("currentChat", chatRoomRepository.findById(id).get());
