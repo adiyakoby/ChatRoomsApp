@@ -2,6 +2,7 @@ package com.ex5adiyakobymichaelzargari.controllers;
 
 import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
 import com.ex5adiyakobymichaelzargari.Services.UserService;
+import com.ex5adiyakobymichaelzargari.UserDataSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,9 @@ public class AdminController {
     @Autowired
     private ChatRoomService chatRoomService;
 
+    @Autowired
+    private UserDataSession userDataSession;
+
     @GetMapping("/dashboard")
     public String adminDashboard(Model model, RedirectAttributes redirectAttributes) {
         try {
@@ -25,6 +29,8 @@ public class AdminController {
             model.addAttribute("users", userService.findAllUsers());
             model.addAttribute("enabledChatRooms", chatRoomService.findEnabledChatRooms());
             model.addAttribute("header", "Admin Dashboard");
+            model.addAttribute("userCurrentChat", userDataSession.getChatId());
+
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error loading dashboard data: " + e.getMessage());
             return "redirect:/error";

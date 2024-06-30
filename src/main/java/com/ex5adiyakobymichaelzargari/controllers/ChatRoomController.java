@@ -40,10 +40,8 @@ public class ChatRoomController {
         try {
             if (principal != null) {
                 userDataSession.setChatId(id);
-                List<Message> messages = chatRoomService.getAllMessagesByChatRoom(id);
-
                 model.addAttribute("userName", userDataSession.getUsername());
-                model.addAttribute("messages", messages);
+                model.addAttribute("messages", chatRoomService.getAllMessagesByChatRoom(id));
                 model.addAttribute("chatRoom", new ChatRoom());
                 model.addAttribute("currentChat", chatRoomRepository.findById(id).orElseThrow(() -> new Exception("Chat room not found")));
                 model.addAttribute("chatRoomsList", userService.getUserChatRooms(principal.getUserId()));
