@@ -1,21 +1,18 @@
 import * as StompJs from "@stomp/stompjs";
 
 (function() {
-
     document.addEventListener("DOMContentLoaded", init);
-
 
     const userName = document.getElementById('username');
     const userMessage = document.getElementById('user-message-content');
     const responseBody = document.getElementById('responseBody');
     const chatBody = document.getElementById('chat');
-    const newChatRoomName = document.getElementById('new-chatroom-name');
     const chatId = document.getElementById('chat-room-id');
 
     function init() {
         connect();
         chatBody.scrollTop = chatBody.scrollHeight;
-        document.getElementById("send-message").addEventListener("click",sendMessage);
+        document.getElementById("send-message").addEventListener("click", sendMessage);
     }
 
     let userColorMap = {}; // Object to store user colors dynamically
@@ -76,8 +73,8 @@ import * as StompJs from "@stomp/stompjs";
     }
 
     function showMessageOutput(messageOutput) {
-
-        let messageClass = messageOutput.from === userName.value.trim() ?'outgoing-message': 'incoming-message' ;
+        let messageClass = messageOutput.from === userName.value.trim() ? 'outgoing-message' : 'incoming-message';
+        let alignClass = messageOutput.from === userName.value.trim() ? 'ms-auto' : 'me-auto';
 
         // Assign color based on whether the user is regular or not
         let userColor = userColorMap[messageOutput.from];
@@ -88,12 +85,13 @@ import * as StompJs from "@stomp/stompjs";
         }
 
         responseBody.innerHTML +=
-            `<div class="chat-message ${messageClass}" style="background-color: ${userColor}; color: #fff;">
-                <div><strong>${messageOutput.from}</strong> <span class="text-muted" style="font-size: smaller;">${messageOutput.time}</span></div>
-                <div>${messageOutput.text}</div>
+            `<div class="d-flex">
+                <div class="chat-message ${messageClass} ${alignClass}" style="background-color: ${userColor}; color: #fff;">
+                    <div><strong>${messageOutput.from}</strong> <span class="text-muted" style="font-size: smaller;">${messageOutput.time}</span></div>
+                    <div>${messageOutput.text}</div>
+                </div>
              </div>`;
         chatBody.scrollTop = chatBody.scrollHeight;
-
     }
 
     function getRandomColor(str) {
@@ -104,8 +102,4 @@ import * as StompJs from "@stomp/stompjs";
         const index = Math.abs(hash) % USER_COLORS.length;
         return USER_COLORS[index];
     }
-
-
-
 })();
-

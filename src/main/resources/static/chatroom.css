@@ -25,14 +25,18 @@ body {
     margin-bottom: 8px;
     padding: 8px;
     border-radius: 10px;
+    max-width: 100%;
+    width: fit-content; /* Adjust width to fit content */
 }
 .outgoing-message {
     background-color: #d1ecf1;
     align-self: flex-end;
+    text-align: right;
 }
 .incoming-message {
     background-color: #ffffff;
     border: 1px solid #ced4da;
+    align-self: flex-start;
 }
 .message-input {
     display: flex;
