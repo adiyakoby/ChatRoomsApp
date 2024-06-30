@@ -19,14 +19,21 @@ public class ChatRoomService {
     @Autowired
     private MessageRepository messageRepository;
 
-    public ChatRoom createChatRoom(String name, String description) {
+    public ChatRoom createChatRoom(String name, String description, boolean isEnabled) {
         if (chatRoomRepository.findByName(name) != null) {
             return null;
         }
-        ChatRoom chatRoom = new ChatRoom();
-        chatRoom.setName(name);
-        chatRoom.setDescription(description);
-        return chatRoomRepository.save(chatRoom);
+        ChatRoom chatroom = new ChatRoom();
+        chatroom.setName(name);
+        chatroom.setDescription(description);
+        chatroom.setEnabled(isEnabled);
+        return chatRoomRepository.save(chatroom);
+    }
+
+    public ChatRoom enableChatRoom(Long Id) {
+        ChatRoom chatroom = chatRoomRepository.findById(Id).get();
+        chatroom.setEnabled(true);
+        return chatRoomRepository.save(chatroom);
     }
 
     public List<ChatRoom> getAllChatRooms() {
@@ -41,6 +48,16 @@ public class ChatRoomService {
         }
         return chatRoom;
     }
+
+    public ChatRoom getChatRoomByName(String chatRoomName) {
+        ChatRoom chatroom = chatRoomRepository.findByName(chatRoomName);
+        if (chatroom == null || !chatroom.isEnabled()) {
+            return null;
+        }
+        return chatroom;
+    }
+
+
 
     public void addMessageToChatRoom(User user, Long chatId, String text, String time) {
         ChatRoom chatRoom = chatRoomRepository.findById(chatId).orElse(null);
@@ -59,6 +76,7 @@ public class ChatRoomService {
         }
         return null;
     }
+
     public List<Message> getAllMessagesByChatRoom(String chatRoomName) {
         return chatRoomRepository.findByName(chatRoomName).getMessages();
     }

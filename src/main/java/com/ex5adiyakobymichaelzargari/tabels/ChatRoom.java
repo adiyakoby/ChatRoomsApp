@@ -2,6 +2,7 @@ package com.ex5adiyakobymichaelzargari.tabels;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +25,8 @@ public class ChatRoom {
     private String name;
 
     private String description;
+
+    private boolean enabled = false;
 
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Message> messages = new ArrayList<>();

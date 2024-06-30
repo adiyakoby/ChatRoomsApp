@@ -28,18 +28,21 @@ public class ChatRestController {
 
 
     @PostMapping("/newChatRoom")
-    public String newChatRoom(@AuthenticationPrincipal MyUserPrincipal principal, ChatRoom chatRoom) {
-        chatRoomRepository.save(chatRoom);
-        userService.addChatRoomToUser(principal.getUserId(), chatRoom.getId());
-
-        return "redirect:/chatroom/" + chatRoom.getId();
+    public String newChatRoom(@AuthenticationPrincipal MyUserPrincipal principal, ChatRoom chatRoom, RedirectAttributes redirectAttributes) {
+        try {
+            chatRoomRepository.save(chatRoom);
+            redirectAttributes.addFlashAttribute("successMessage", "Your request for a new chat room has been submitted successfully and is pending approval.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while submitting your request. Please try again.");
+        }
+        return "redirect:/newChatForm";
     }
 
     @PostMapping("/addChatRoom")
     public String addChatRoom(@AuthenticationPrincipal MyUserPrincipal principal , ChatRoom chatroom, RedirectAttributes redirectAttributes) {
-        ChatRoom chat = chatRoomRepository.findByName(chatroom.getName());
+        ChatRoom chat = chatRoomService.getChatRoomByName(chatroom.getName());
         if (chat == null || chat.isChatFull()) {
-            String errMsg = chat == null ? "chat room not found." : "Chat room is full. You cannot join." ;
+            String errMsg = chat == null ? "chat room not found or not approved yet." : "Chat room is full. You cannot join." ;
             redirectAttributes.addFlashAttribute("errorAddChatRoom", errMsg);
             return "redirect:/chatroom/" + 1;
         }

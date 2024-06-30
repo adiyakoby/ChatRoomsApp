@@ -1,67 +1,55 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create New Chat Room</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Request New Chat Room</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <style>
         body {
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
         }
         .container {
-            max-width: 600px;
-            margin: 50px auto;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
         }
-        .form-group {
-            margin-bottom: 20px;
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .btn-primary {
             background-color: #007bff;
-            border-color: #007bff;
-        }
-        .btn-primary:hover {
-            background-color: #0069d9;
-            border-color: #0062cc;
-        }
-        .btn-secondary {
-            background-color: #6c757d;
-            border-color: #6c757d;
-        }
-        .btn-secondary:hover {
-            background-color: #5a6268;
-            border-color: #545b62;
+            border: none;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h2 class="text-center mb-4">Create New Chat Room</h2>
-
-    <form th:action="@{/newChatRoom}" method="post" th:object="${chatRoom}">
-        <div class="form-group">
-            <label for="name">Chat Room Name</label>
-            <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter chat room name">
-            <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+    <div class="row justify-content-center">
+        <div class="col-md-6 form-container">
+            <h2 class="text-center">Request New Chat Room</h2>
+            <div th:if="${successMessage}" class="alert alert-success" role="alert">
+                <span th:text="${successMessage}"></span>
+            </div>
+            <form th:action="@{/newChatRoom}" method="post" th:object="${chatRoom}">
+                <div class="form-group mt-3">
+                    <label for="name">Chat Room Name</label>
+                    <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter chat room name">
+                    <small class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" id="description" th:field="*{description}" placeholder="Enter chat room description">
+                    <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Request Chat Room</button>
+            </form>
+            <div class="text-center mt-3">
+                <a href="/" class="btn btn-secondary">Back to Home Page</a>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea class="form-control" id="description" th:field="*{description}" rows="3" placeholder="Enter chat room description"></textarea>
-            <small class="form-text text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-block">Add Chat Room</button>
-    </form>
-
-    <div class="text-center mt-3">
-        <a href="/" class="btn btn-secondary ml-2">Back to Home Page</a>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
 </html>

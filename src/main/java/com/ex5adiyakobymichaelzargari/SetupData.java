@@ -54,7 +54,7 @@ public class SetupData {
     }
 
     private void initChatRoom() {
-        chatRoomService.createChatRoom("Home", "Home chat - for everyone.");
+        chatRoomService.createChatRoom("Home", "Home chat - for everyone.", true);
     }
 
 }
