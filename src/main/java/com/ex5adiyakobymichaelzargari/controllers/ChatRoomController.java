@@ -45,6 +45,7 @@ public class ChatRoomController {
             model.addAttribute("chatRoom", new ChatRoom());
             model.addAttribute("currentChat", chatRoomRepository.findById(id).get());
             model.addAttribute("chatRoomsList", userService.getUserChatRooms(principal.getUserId()));
+            model.addAttribute("header", "chatroom");
         }
 
         return "/shared/chatroom";

@@ -2,12 +2,9 @@ package com.ex5adiyakobymichaelzargari.controllers;
 
 import com.ex5adiyakobymichaelzargari.Principals.MyUserPrincipal;
 
-import com.ex5adiyakobymichaelzargari.Services.UserService;
 import com.ex5adiyakobymichaelzargari.UserDataSession;
 import com.ex5adiyakobymichaelzargari.tabels.*;
 import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,20 +31,21 @@ public class MainController {
             userDataSession.setUserLoggedIn(true);
             model.addAttribute("userName", userDataSession.getUsername());
             model.addAttribute("userCurrentChat", userDataSession.getChatId());
+            model.addAttribute("header", "Home");
         }
-        return "index";
+        return "public/index";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+        return "public/login";
     }
 
 
     @GetMapping("/signup")
     public String signup(Model model) {
         model.addAttribute("user", new User());
-        return "signup";
+        return "public/signup";
     }
 
 
@@ -55,7 +53,7 @@ public class MainController {
     @GetMapping("/error")
     public String error(Exception ex, Model model) {
         model.addAttribute("errorMessage", ex.getMessage());
-        return "error";
+        return "public/error";
     }
 
     /** simple Error page. */
@@ -70,7 +68,7 @@ public class MainController {
     public String handleException(Exception ex, Model model) {
         String errorMessage = (ex != null ? ex.getMessage() : "Unknown error");
         model.addAttribute("errorMessage", errorMessage);
-        return "error";
+        return "public/error";
     }
 
 

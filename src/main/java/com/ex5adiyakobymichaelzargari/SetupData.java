@@ -46,11 +46,8 @@ public class SetupData {
         test.setRole("ROLE_USER");
         test.addChatRoom(chatRoomRepository.findById(1L).orElse(null));
 
-
         userService.registerNewUser(admin);
         userService.registerNewUser(test);
-
-
     }
 
     private void initChatRoom() {
