@@ -25,6 +25,7 @@ public class SecurityJavaConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers( "/", "/error", "/403", "/login","/static/**", "/signup").permitAll()
                         .requestMatchers( "/chatroom/**", "/newChatRoom").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/adminDashboard", "/chatRoomRequests", "/enabledChatRooms", "/users", "/admin/**" , "/fragments").hasRole("ADMIN")
                         .anyRequest().authenticated()
 
 

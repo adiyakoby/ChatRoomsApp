@@ -16,7 +16,6 @@ public class User{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
     @NotEmpty(message = "username cannot be empty")
     @Column(nullable = false, unique = true)
     private String username;
@@ -29,7 +28,6 @@ public class User{
 
     @NotNull
     private Date createdAt;
-
 
 
     @ManyToMany

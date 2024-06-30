@@ -30,11 +30,11 @@ public class ChatRoomService {
         return chatRoomRepository.save(chatroom);
     }
 
-    public ChatRoom enableChatRoom(Long Id) {
-        ChatRoom chatroom = chatRoomRepository.findById(Id).get();
-        chatroom.setEnabled(true);
-        return chatRoomRepository.save(chatroom);
-    }
+//    public ChatRoom enableChatRoom(Long Id) {
+//        ChatRoom chatroom = chatRoomRepository.findById(Id).get();
+//        chatroom.setEnabled(true);
+//        return chatRoomRepository.save(chatroom);
+//    }
 
     public List<ChatRoom> getAllChatRooms() {
 
@@ -79,6 +79,41 @@ public class ChatRoomService {
 
     public List<Message> getAllMessagesByChatRoom(String chatRoomName) {
         return chatRoomRepository.findByName(chatRoomName).getMessages();
+    }
+
+    public List<ChatRoom> findPendingChatRooms() {
+        return chatRoomRepository.findByEnabledFalse();
+    }
+
+    public List<ChatRoom> findEnabledChatRooms() {
+        return chatRoomRepository.findByEnabledTrue();
+    }
+
+    public void approveChatRoom(Long id) {
+        ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid chat room ID"));
+        chatRoom.setEnabled(true);
+        chatRoomRepository.save(chatRoom);
+    }
+
+    public void disapproveChatRoom(Long id) {
+        ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid chat room ID"));
+        chatRoomRepository.delete(chatRoom);
+    }
+
+    public void deleteChatRoom(Long id) {
+        chatRoomRepository.deleteById(id);
+    }
+
+    public void enableChatRoom(Long id) {
+        ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid chat room ID"));
+        chatRoom.setEnabled(true);
+        chatRoomRepository.save(chatRoom);
+    }
+
+    public void disableChatRoom(Long id) {
+        ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid chat room ID"));
+        chatRoom.setEnabled(false);
+        chatRoomRepository.save(chatRoom);
     }
 
 }

@@ -59,6 +59,16 @@ public class MainController {
         return "login";
     }
 
+
+    @GetMapping("/adminDashboard")
+    public String adminDashboard(Model model) {
+
+        model.addAttribute("chatRooms", chatRoomService.findPendingChatRooms());
+        model.addAttribute("users", userService.findAllUsers());
+        model.addAttribute("enabledChatRooms", chatRoomService.findEnabledChatRooms());
+        return "/admin/adminDashboard";
+    }
+
     @GetMapping("/newChatForm")
     public String newChatForm(Model model) {
         model.addAttribute("chatRoom", new ChatRoom());

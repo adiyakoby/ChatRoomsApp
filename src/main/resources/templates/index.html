@@ -45,13 +45,13 @@
         <a th:href="@{/signup}" class="btn btn-primary">Signup</a>
     </div>
     <div sec:authorize="isAuthenticated()" class="text-center mb-4">
-        <!--Logged user: <span sec:authentication="name">?</span>-->
         Logged user: <span th:text="${userName}">?</span> |
-       <!-- Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>-->
+        <div sec:authorize="hasRole('ROLE_BANNED')" class="alert alert-danger text-center" role="alert">
+            <strong>You are banned and cannot participate in our chatroom.</strong>
+        </div>
         <form th:action="@{/logout}" method="post" style="display:inline">
             <input type="submit" value="Logout" class="btn btn-danger ms-2"/>
         </form>
-       <!-- <a th:href="@{/chatroom/{id}(id=${1})}" class="btn btn-primary ms-2">Enter ChatRoom</a>-->
         <a th:href="@{/chatroom/{id}(id=${userCurrentChat})}" class="btn btn-primary ms-2">Enter ChatRoom</a>
         <a th:href="@{/newChatForm}" class="btn btn-primary ms-2">Add New ChatRoom</a>
     </div>

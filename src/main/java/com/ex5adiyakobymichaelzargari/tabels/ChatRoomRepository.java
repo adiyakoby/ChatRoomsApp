@@ -8,6 +8,11 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
     ChatRoom findByName(String name);
     List<Message> findMessageByName(String chatRoomName);
     List<Message> findMessagesById(Long chatRoomId);
+    List<ChatRoom> findChatRoomByEnabled(boolean enabled);
 
     List<ChatRoom> findAllByOrderByNameAsc();
+
+    List<ChatRoom> findByEnabledFalse();
+
+    List<ChatRoom> findByEnabledTrue();
 }

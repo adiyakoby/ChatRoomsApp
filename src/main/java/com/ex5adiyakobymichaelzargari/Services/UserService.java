@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -57,6 +58,22 @@ public class UserService {
     public Set<ChatRoom> getUserChatRooms(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         return user.getChatRooms();
+    }
+
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public void banUser(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
+        user.setRole("ROLE_BANNED");
+        userRepository.save(user);
+    }
+
+    public void unbanUser(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
+        user.setRole("ROLE_USER");
+        userRepository.save(user);
     }
 
 }
