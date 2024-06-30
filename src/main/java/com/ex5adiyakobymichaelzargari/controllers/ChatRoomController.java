@@ -57,7 +57,11 @@ public class ChatRoomController {
     }
 
     @GetMapping("/newChatForm")
-    public String newChatForm(Model model) {
+    public String newChatForm(@AuthenticationPrincipal MyUserPrincipal principal, Model model) {
+        if (principal != null) {
+            userDataSession.setUsername(principal.getUsername());
+            model.addAttribute("userName", userDataSession.getUsername());
+        }
         model.addAttribute("chatRoom", new ChatRoom());
         return "/shared/newChatForm";
     }

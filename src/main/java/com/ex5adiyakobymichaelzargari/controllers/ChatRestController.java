@@ -67,7 +67,6 @@ public class ChatRestController {
 
     @PostMapping("/deleteChatRoom/{id}")
     public String deleteChatRoom(@AuthenticationPrincipal MyUserPrincipal principal , @PathVariable Long id) {
-        System.out.println("[LOG]: deleteChatRoom " + id);
         if (principal != null) {
             userService.removeChatRoomFromUser(principal.getUserId(), id);
         }

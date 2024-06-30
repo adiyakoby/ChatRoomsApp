@@ -30,6 +30,8 @@ public class AdminController {
             model.addAttribute("enabledChatRooms", chatRoomService.findEnabledChatRooms());
             model.addAttribute("header", "Admin Dashboard");
             model.addAttribute("userCurrentChat", userDataSession.getChatId());
+            model.addAttribute("userName", userDataSession.getUsername());
+
 
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error loading dashboard data: " + e.getMessage());

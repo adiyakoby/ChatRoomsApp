@@ -30,17 +30,17 @@ public class UserController {
         try {
             if (result.hasErrors()) {
                 model.addAttribute("errors", result.getAllErrors());
-                return "signup";
+                return "public/signup";
             } else if (userRepository.findByUsername(user.getUsername()) != null) {
-                model.addAttribute("errorSignUp", "Username already exists");
-                return "signup";
+                model.addAttribute("errorExist", "Username already exists");
+                return "public/signup";
             }
             userService.registerNewUser(user);
             userDataSession.setUsername(user.getUsername());
-            return "index";
+            return "public/index";
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("message", "An unexpected error occurred while trying to sign you up. Please try again.");
-            return "redirect:/signup";
+            redirectAttributes.addFlashAttribute("generalError", "An unexpected error occurred while trying to sign you up. Please try again.");
+            return "redirect:/public/signup";
         }
     }
 
