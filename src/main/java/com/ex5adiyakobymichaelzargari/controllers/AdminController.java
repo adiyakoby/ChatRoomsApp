@@ -141,6 +141,9 @@ public class AdminController {
             if (id == 1L) {
                 throw new RuntimeException("Cannot delete the main chat.");
             }
+            if (userDataSession.getChatId() == id) {
+                userDataSession.setChatId(1L);
+            }
             chatRoomService.deleteChatRoom(id);
             redirectAttributes.addFlashAttribute("successMessage", "Chat room has been deleted.");
         } catch (Exception e) {
@@ -179,6 +182,9 @@ public class AdminController {
         try {
             if (id == 1L) {
                 throw new RuntimeException("Cannot disable the main chat.");
+            }
+            if (userDataSession.getChatId() == id) {
+                userDataSession.setChatId(1L);
             }
             chatRoomService.disableChatRoom(id);
             redirectAttributes.addFlashAttribute("successMessage", "Chat room has been disabled.");
