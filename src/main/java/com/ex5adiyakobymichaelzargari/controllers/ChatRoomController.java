@@ -2,7 +2,6 @@ package com.ex5adiyakobymichaelzargari.controllers;
 
 import com.ex5adiyakobymichaelzargari.Principals.MyUserPrincipal;
 import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
-import com.ex5adiyakobymichaelzargari.Services.MessageService;
 import com.ex5adiyakobymichaelzargari.Services.UserService;
 import com.ex5adiyakobymichaelzargari.UserDataSession;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoom;
