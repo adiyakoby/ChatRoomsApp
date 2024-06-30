@@ -6,7 +6,6 @@ import com.ex5adiyakobymichaelzargari.Services.UserService;
 import com.ex5adiyakobymichaelzargari.UserDataSession;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoom;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoomRepository;
-import com.ex5adiyakobymichaelzargari.tabels.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -16,8 +15,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
 
+/**
+ * ChatRoomController handles the operations related to chat rooms, including displaying chat rooms and their messages.
+ */
 @Controller
 @RequestMapping("/chatroom")
 public class ChatRoomController {
@@ -34,7 +35,15 @@ public class ChatRoomController {
     @Autowired
     private UserService userService;
 
-
+    /**
+     * Displays the specified chat room and its messages.
+     *
+     * @param principal the authenticated user
+     * @param model the model to pass attributes to the view
+     * @param id the ID of the chat room
+     * @param redirectAttributes attributes for redirect scenarios
+     * @return the view name of the chat room or a redirection in case of an error
+     */
     @GetMapping("/{id}")
     public String chatroom(@AuthenticationPrincipal MyUserPrincipal principal, Model model, @PathVariable Long id ,RedirectAttributes redirectAttributes) {
         try {
@@ -56,6 +65,12 @@ public class ChatRoomController {
 
     }
 
+    /**
+     * Displays the form to create a new chat room.
+     *
+     * @param model the model to pass attributes to the view
+     * @return the view name of the new chat room form
+     */
     @GetMapping("/newChatForm")
     public String newChatForm(Model model) {
         model.addAttribute("chatRoom", new ChatRoom());

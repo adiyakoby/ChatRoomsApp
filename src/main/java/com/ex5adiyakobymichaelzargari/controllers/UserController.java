@@ -13,18 +13,30 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
+/**
+ * UserController handles user-related actions such as signing up and logging in.
+ */
 @Controller
 public class UserController {
 
     @Autowired
     private UserDataSession userDataSession;
 
-
     @Autowired
     private UserService userService;
+
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Handles the user signup process.
+     *
+     * @param user the user to be registered
+     * @param result the binding result for validation
+     * @param model the model to pass attributes to the view
+     * @param redirectAttributes attributes for redirect scenarios
+     * @return the view name to be rendered
+     */
     @PostMapping("/signup")
     public String addUser(@Valid User user, BindingResult result, Model model ,RedirectAttributes redirectAttributes) {
         try {

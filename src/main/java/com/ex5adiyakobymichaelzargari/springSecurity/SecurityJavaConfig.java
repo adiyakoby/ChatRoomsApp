@@ -8,15 +8,29 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import static org.springframework.security.config.Customizer.withDefaults;
 
+/**
+ * SecurityJavaConfig configures the security settings for the application using Java configuration.
+ */
 @Configuration
 public class SecurityJavaConfig {
 
+    /**
+     * Bean for password encoding using BCrypt.
+     *
+     * @return PasswordEncoder implementation
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-
+    /**
+     * Configures the security filter chain.
+     *
+     * @param http HttpSecurity configuration
+     * @return the SecurityFilterChain
+     * @throws Exception in case of any configuration issues
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http

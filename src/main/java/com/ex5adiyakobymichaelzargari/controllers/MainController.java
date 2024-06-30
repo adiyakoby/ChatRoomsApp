@@ -12,18 +12,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * MainController handles the main page, login, signup, and error pages.
+ */
 @Controller
 public class MainController {
-
 
     @Autowired
     private UserDataSession userDataSession;
 
-
     public MainController(ChatRoomService chatRoomService) {
     }
 
-    /** Home page. */
+    /**
+     * Displays the home page.
+     *
+     * @param principal the authenticated user
+     * @param model the model to pass attributes to the view
+     * @return the view name of the home page
+     */
     @RequestMapping("/")
     public String index(@AuthenticationPrincipal MyUserPrincipal principal, Model model){
         if(principal != null) {
@@ -36,12 +43,22 @@ public class MainController {
         return "public/index";
     }
 
+    /**
+     * Displays the login page.
+     *
+     * @return the view name of the login page
+     */
     @GetMapping("/login")
     public String login() {
         return "public/login";
     }
 
-
+    /**
+     * Displays the signup page.
+     *
+     * @param model the model to pass attributes to the view
+     * @return the view name of the signup page
+     */
     @GetMapping("/signup")
     public String signup(Model model) {
         model.addAttribute("user", new User());
@@ -49,20 +66,36 @@ public class MainController {
     }
 
 
-    /** Error page that displays all exceptions. */
+    /**
+     * Displays the error page.
+     *
+     * @param ex the exception that occurred
+     * @param model the model to pass attributes to the view
+     * @return the view name of the error page
+     */
     @GetMapping("/error")
     public String error(Exception ex, Model model) {
         model.addAttribute("errorMessage", ex.getMessage());
         return "public/error";
     }
 
-    /** simple Error page. */
+    /**
+     * Displays the forbidden page.
+     *
+     * @return the view name of the forbidden page
+     */
     @RequestMapping("/403")
     public String forbidden() {
         return "public/403";
     }
 
-
+    /**
+     * Handles exceptions and displays the error page.
+     *
+     * @param ex the exception that occurred
+     * @param model the model to pass attributes to the view
+     * @return the view name of the error page
+     */
     @ExceptionHandler({Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleException(Exception ex, Model model) {

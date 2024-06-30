@@ -9,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * AdminController handles all administrative actions such as managing users and chat rooms.
+ */
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -22,6 +25,13 @@ public class AdminController {
     @Autowired
     private UserDataSession userDataSession;
 
+    /**
+     * Loads the admin dashboard with necessary data.
+     *
+     * @param model the model to add attributes to
+     * @param redirectAttributes attributes for redirect scenarios
+     * @return the admin dashboard view
+     */
     @GetMapping("/dashboard")
     public String adminDashboard(Model model, RedirectAttributes redirectAttributes) {
         try {
@@ -38,6 +48,13 @@ public class AdminController {
         return "/admin/dashboard";
     }
 
+    /**
+     * Bans a user based on their ID.
+     *
+     * @param id the ID of the user to ban
+     * @param redirectAttributes attributes for redirect scenarios
+     * @return the redirect URL for the admin dashboard
+     */
     @PostMapping("/banUser/{id}")
     public String banUser(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
@@ -53,6 +70,13 @@ public class AdminController {
 
     }
 
+    /**
+     * Unbans a user based on their ID.
+     *
+     * @param id the ID of the user to unban
+     * @param redirectAttributes attributes for redirect scenarios
+     * @return the redirect URL for the admin dashboard
+     */
     @PostMapping("/unbanUser/{id}")
     public String unbanUser(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
@@ -65,7 +89,13 @@ public class AdminController {
 
     }
 
-
+    /**
+     * Approves a chat room based on its ID.
+     *
+     * @param id the ID of the chat room to approve
+     * @param redirectAttributes attributes for redirect scenarios
+     * @return the redirect URL for the admin dashboard
+     */
     @PostMapping("/approveChatRoom/{id}")
     public String approveChatRoom(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
@@ -77,6 +107,13 @@ public class AdminController {
         return "redirect:/admin/dashboard";
     }
 
+    /**
+     * Disapproves a chat room based on its ID.
+     *
+     * @param id the ID of the chat room to disapprove
+     * @param redirectAttributes attributes for redirect scenarios
+     * @return the redirect URL for the admin dashboard
+     */
     @PostMapping("/disapproveChatRoom/{id}")
     public String disapproveChatRoom(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
@@ -89,6 +126,13 @@ public class AdminController {
 
     }
 
+    /**
+     * Deletes a chat room based on its ID.
+     *
+     * @param id the ID of the chat room to delete
+     * @param redirectAttributes attributes for redirect scenarios
+     * @return the redirect URL for the admin dashboard
+     */
     @PostMapping("/deleteChatRoom/{id}")
     public String deleteChatRoom(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
@@ -103,7 +147,13 @@ public class AdminController {
         return "redirect:/admin/dashboard";
     }
 
-
+    /**
+     * Enables a chat room based on its ID.
+     *
+     * @param id the ID of the chat room to enable
+     * @param redirectAttributes attributes for redirect scenarios
+     * @return the redirect URL for the admin dashboard
+     */
     @PostMapping("/enableChatRoom/{id}")
     public String enableChatRoom(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
@@ -115,6 +165,13 @@ public class AdminController {
         return "redirect:/admin/dashboard";
     }
 
+    /**
+     * Disables a chat room based on its ID.
+     *
+     * @param id the ID of the chat room to disable
+     * @param redirectAttributes attributes for redirect scenarios
+     * @return the redirect URL for the admin dashboard
+     */
     @PostMapping("/disableChatRoom/{id}")
     public String disableChatRoom(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {

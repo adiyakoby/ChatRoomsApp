@@ -5,6 +5,9 @@ import lombok.Setter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+/**
+ * UserDataSession is a session scoped bean that holds the user's data.
+ */
 @Getter
 @Setter
 @Component

@@ -13,7 +13,12 @@
 
     <h1 class="text-center mt-4">Admin Dashboard</h1>
     <p class="lead text-center">Manage registered users, handle chatroom requests, and control enabled chatrooms.</p>
-
+    <div th:if="${successMessage}" class="alert alert-success mt-3" role="alert">
+        <span th:text="${successMessage}"></span>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger mt-3" role="alert">
+        <span th:text="${errorMessage}"></span>
+    </div>
     <div class="mt-4 row gx-3">
         <div class="col-md">
             <div th:include="/admin/fragments/users :: users"></div>

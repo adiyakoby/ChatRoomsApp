@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
-
+/**
+ * ChatRestController handles chat room related actions such as creating, adding, and deleting chat rooms.
+ */
 @Controller
 public class ChatRestController {
 
@@ -25,7 +27,14 @@ public class ChatRestController {
     @Autowired
     UserService userService;
 
-
+    /**
+     * Handles the creation of a new chat room.
+     *
+     * @param principal the authenticated user
+     * @param chatRoom the chat room to be created
+     * @param redirectAttributes attributes for redirect scenarios
+     * @return the redirect URL for the new chat room form
+     */
     @PostMapping("/newChatRoom")
     public String newChatRoom(@AuthenticationPrincipal MyUserPrincipal principal, ChatRoom chatRoom, RedirectAttributes redirectAttributes) {
         try {
@@ -37,11 +46,24 @@ public class ChatRestController {
         return "redirect:/chatroom/newChatForm";
     }
 
+    /**
+     * Redirects to the new chat room form.
+     *
+     * @return the redirect URL for the new chat room form
+     */
     @GetMapping("/newChatRoom")
     public String newChatRoom() {
         return "redirect:/chatroom/newChatForm";
     }
 
+    /**
+     * Handles adding a user to an existing chat room.
+     *
+     * @param principal the authenticated user
+     * @param chatroom the chat room to be added
+     * @param redirectAttributes attributes for redirect scenarios
+     * @return the redirect URL for the chat room or an error page
+     */
     @PostMapping("/addChatRoom")
     public String addChatRoom(@AuthenticationPrincipal MyUserPrincipal principal , ChatRoom chatroom, RedirectAttributes redirectAttributes) {
         try {
@@ -60,11 +82,24 @@ public class ChatRestController {
 
     }
 
+    /**
+     * Redirects to the add chat room form.
+     *
+     * @return the redirect URL for the add chat room form
+     */
     @GetMapping("/addChatRoom")
     public String addChatRoom() {
         return "redirect:/";
     }
 
+    /**
+     * Handles deleting a chat room from a user's list.
+     *
+     * @param principal the authenticated user
+     * @param id the ID of the chat room to delete
+     * @param redirectAttributes attributes for redirect scenarios
+     * @return the redirect URL for the chat room list or an error page
+     */
     @PostMapping("/deleteChatRoom/{id}")
     public String deleteChatRoom(@AuthenticationPrincipal MyUserPrincipal principal , @PathVariable Long id ,RedirectAttributes redirectAttributes) {
         try{
@@ -79,6 +114,11 @@ public class ChatRestController {
 
     }
 
+    /**
+     * Redirects to the delete chat room form.
+     *
+     * @return the redirect URL for the delete chat room form
+     */
     @GetMapping("/deleteChatRoom/{id}")
     public String deleteChatRoom() {
         return "redirect:/";

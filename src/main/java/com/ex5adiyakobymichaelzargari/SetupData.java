@@ -9,7 +9,9 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * SetupData initializes the database with some initial data.
+ */
 @Component
 public class SetupData {
 
@@ -23,6 +25,9 @@ public class SetupData {
     @Autowired
     private ChatRoomRepository chatRoomRepository;
 
+    /**
+     * Initializes the database with users .
+     */
     @PostConstruct
     public void init() {
         initChatRoom();
@@ -47,6 +52,9 @@ public class SetupData {
         userService.registerNewUser(test);
     }
 
+    /**
+     * Initializes the database with chat room.
+     */
     private void initChatRoom() {
         chatRoomService.createChatRoom("Home", "Home chat - for everyone.", true);
     }

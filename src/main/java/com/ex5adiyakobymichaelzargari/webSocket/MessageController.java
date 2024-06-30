@@ -11,13 +11,12 @@ import org.springframework.stereotype.Controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
+/**
+ * MessageController handles the sending of messages in the websocket.
+ */
 @Controller
 public class MessageController {
-
-    Set<String> chatRoomNames = new HashSet<String>();
 
     @Autowired
     UserRepository userRepository;
@@ -34,6 +33,12 @@ public class MessageController {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
+    /**
+     * Sends a message to a chat room via the websocket.
+     *
+     * @param message the message to be sent
+     * @throws Exception if the message cannot be sent
+     */
     @MessageMapping("/chat")
     @SendTo("/topic/messages")
     public void send(MessageDTO message) throws Exception {
@@ -45,6 +50,5 @@ public class MessageController {
 
         messagingTemplate.convertAndSend(destination , new MessageDTO(message.getFrom(), message.getText(), time));
 
-//        return new MessageDTO(message.getFrom(), message.getText(), time);
     }
 }
