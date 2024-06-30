@@ -66,12 +66,17 @@ public class ChatRestController {
     }
 
     @PostMapping("/deleteChatRoom/{id}")
-    public String deleteChatRoom(@AuthenticationPrincipal MyUserPrincipal principal , @PathVariable Long id) {
-        System.out.println("[LOG]: deleteChatRoom " + id);
-        if (principal != null) {
-            userService.removeChatRoomFromUser(principal.getUserId(), id);
+    public String deleteChatRoom(@AuthenticationPrincipal MyUserPrincipal principal , @PathVariable Long id ,RedirectAttributes redirectAttributes) {
+        try{
+            if (principal != null) {
+                userService.removeChatRoomFromUser(principal.getUserId(), id);
+            }
+            return "redirect:/chatroom/" + 1;
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", "An unexpected error occurred while trying to delete the chatroom. Please try again.");
+            return "redirect:/chatroom/" + 1;
         }
-        return "redirect:/chatroom/" + 1;
+
     }
 
     @GetMapping("/deleteChatRoom/{id}")
