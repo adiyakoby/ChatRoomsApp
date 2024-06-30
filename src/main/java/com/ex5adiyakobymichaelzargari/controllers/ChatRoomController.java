@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -35,19 +36,26 @@ public class ChatRoomController {
 
 
     @GetMapping("/{id}")
-    public String chatroom(@AuthenticationPrincipal MyUserPrincipal principal, Model model, @PathVariable Long id) {
-        if (principal != null) {
-            userDataSession.setChatId(id);
-            List<Message> messages = chatRoomService.getAllMessagesByChatRoom(id);
-            model.addAttribute("userName", userDataSession.getUsername());
-            model.addAttribute("messages", messages);
-            model.addAttribute("chatRoom", new ChatRoom());
-            model.addAttribute("currentChat", chatRoomRepository.findById(id).get());
-            model.addAttribute("chatRoomsList", userService.getUserChatRooms(principal.getUserId()));
-            model.addAttribute("header", "chatroom");
+    public String chatroom(@AuthenticationPrincipal MyUserPrincipal principal, Model model, @PathVariable Long id ,RedirectAttributes redirectAttributes) {
+        try {
+            if (principal != null) {
+                userDataSession.setChatId(id);
+                List<Message> messages = chatRoomService.getAllMessagesByChatRoom(id);
+
+                model.addAttribute("userName", userDataSession.getUsername());
+                model.addAttribute("messages", messages);
+                model.addAttribute("chatRoom", new ChatRoom());
+                model.addAttribute("currentChat", chatRoomRepository.findById(id).orElseThrow(() -> new Exception("Chat room not found")));
+                model.addAttribute("chatRoomsList", userService.getUserChatRooms(principal.getUserId()));
+                model.addAttribute("header", "chatroom");
+            }
+
+            return "/shared/chatroom";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", "An unexpected error occurred. Please try again.");
+            return "redirect:/chatroom/" + 1;
         }
 
-        return "/shared/chatroom";
     }
 
     @GetMapping("/newChatForm")

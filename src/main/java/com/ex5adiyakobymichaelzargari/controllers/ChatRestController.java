@@ -5,7 +5,6 @@ import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
 import com.ex5adiyakobymichaelzargari.Services.UserService;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoom;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoomRepository;
-import com.ex5adiyakobymichaelzargari.tabels.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
