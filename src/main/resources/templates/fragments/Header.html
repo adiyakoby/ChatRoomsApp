@@ -11,7 +11,9 @@
     <div class="d-flex justify-content-between align-items-center">
         <div>
             <a th:href="@{/}" class="btn btn-secondary">Home</a>
-            <a th:if="${header != 'chatroom'}" th:href="@{/chatroom/{id}(id=${userCurrentChat})}" class="btn btn-primary ms-2">Enter ChatRoom</a>
+            <a th:if="${header != 'chatroom'}"
+               th:href="@{/chatroom/{id}(id=${userCurrentChat ?: 1})}"
+               class="btn btn-primary ms-2">Enter ChatRoom</a>
         </div>
         <div>
             <div sec:authorize="!isAuthenticated()" class="text-center mb-4 d-inline-flex">
@@ -20,7 +22,7 @@
             </div>
             <div sec:authorize="isAuthenticated()" class="text-center mb-4 d-inline-flex align-items-center">
                 <span class="me-2">Logged user: <span th:text="${userName}">?</span></span>
-                <div sec:authorize="hasRole('ROLE_BANNED')" class="alert alert-danger text-center" role="alert">-->
+                <div sec:authorize="hasRole('ROLE_BANNED')" class="alert alert-danger text-center" role="alert">
                     <strong>You are banned and cannot participate in our chatroom.</strong>
                 </div>
                 <form th:action="@{/logout}" method="post" class="d-inline">
