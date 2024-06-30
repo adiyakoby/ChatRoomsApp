@@ -1,0 +1,31 @@
+<!-- fragments/users.html -->
+<div th:fragment="users">
+    <h2 class="mt-4">Registered Users</h2>
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}">1</td>
+            <td th:text="${user.username}">Username</td>
+            <td th:text="${user.role}">User Role</td>
+            <td>
+                <!-- Ban User Form -->
+                <form th:action="@{'/admin/banUser/' + ${user.id}}" method="post" style="display:inline" th:unless="${user.username == 'admin' or user.role == 'ROLE_BANNED'}">
+                    <button type="submit" class="btn btn-warning btn-sm">Ban</button>
+                </form>
+                <!-- Unban User Form -->
+                <form th:action="@{'/admin/unbanUser/' + ${user.id}}" method="post" style="display:inline" th:unless="${user.username == 'admin' or user.role != 'ROLE_BANNED'}">
+                    <button type="submit" class="btn btn-success btn-sm">Unban</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

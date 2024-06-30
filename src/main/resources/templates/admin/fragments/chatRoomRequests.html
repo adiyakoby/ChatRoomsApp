@@ -1,0 +1,32 @@
+<!-- fragments/chatroomRequests.html -->
+<div th:fragment="chatroomRequests">
+    <h2 class="mt-4">Chatroom Requests</h2>
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="chatRoom : ${chatRooms}">
+            <td th:text="${chatRoom.id}">1</td>
+            <td th:text="${chatRoom.name}">Chat Room Name</td>
+            <td th:text="${chatRoom.description}">Chat Room Description</td>
+            <td>
+                <form th:action="@{'/admin/approveChatRoom/' + ${chatRoom.id}}" method="post" style="display:inline">
+                    <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                </form>
+                <form th:action="@{'/admin/disapproveChatRoom/' + ${chatRoom.id}}" method="post" style="display:inline">
+                    <button type="submit" class="btn btn-warning btn-sm">Disapprove</button>
+                </form>
+                <form th:action="@{'/admin/deleteChatRoom/' + ${chatRoom.id}}" method="post" style="display:inline">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
