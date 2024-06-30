@@ -1,7 +1,6 @@
 package com.ex5adiyakobymichaelzargari.webSocket;
 
 import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
-import com.ex5adiyakobymichaelzargari.Services.MessageService;
 import com.ex5adiyakobymichaelzargari.tabels.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -24,8 +23,6 @@ public class MessageController {
     @Autowired
     ChatRoomRepository chatRoomRepository;
 
-    @Autowired
-    MessageService messageService;
 
     @Autowired
     private ChatRoomService chatRoomService;
