@@ -2,9 +2,7 @@ package com.ex5adiyakobymichaelzargari;
 
 
 import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
-import com.ex5adiyakobymichaelzargari.Services.MessageService;
 import com.ex5adiyakobymichaelzargari.Services.UserService;
-import com.ex5adiyakobymichaelzargari.tabels.ChatRoom;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoomRepository;
 import com.ex5adiyakobymichaelzargari.tabels.User;
 import jakarta.annotation.PostConstruct;

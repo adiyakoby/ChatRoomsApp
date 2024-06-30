@@ -1,0 +1,25 @@
+body {
+    background-color: #f8f9fa;
+}
+.hero {
+    background-color: #007bfa;
+    color: #000545;
+    padding: 4rem 2rem;
+    text-align: center;
+    border: azure 1px solid;
+    border-radius: 0.5rem;
+}
+.features {
+    padding: 2rem 0;
+}
+.feature {
+    background-color: #e4e4e4;
+    border: 1px solid #e9ecef;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    text-align: center;
+    transition: transform 0.2s;
+}
+.feature:hover {
+    transform: scale(1.05);
+}

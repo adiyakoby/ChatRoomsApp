@@ -23,6 +23,9 @@
             <h2 th:text="${currentChat.name}">Chat Room Name</h2>
             <p th:text="${currentChat.description}">Chat Room Description</p>
         </div>
+        <div th:if="${message}" class="alert alert-danger" role="alert">
+            <span th:text="${message}"></span>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-3">

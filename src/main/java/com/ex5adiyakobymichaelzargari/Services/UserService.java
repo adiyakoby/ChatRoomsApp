@@ -13,13 +13,6 @@ import java.util.List;
 import java.util.Set;
 
 
-/** Service layer is used to implement business logic
- *  it is a good practice to separate the business logic from the controller
- *  and the repository
- *  this way the controller is only responsible for handling the request and response
- *  the repository is only responsible for the database operations
- *  and the service is responsible for the business logic
- */
 @Service
 public class UserService {
 
