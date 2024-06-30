@@ -1,7 +1,7 @@
 <!-- fragments/users.html -->
 <div th:fragment="users">
     <h2 class="mt-4">Registered Users</h2>
-    <table class="table table-bordered mt-3">
+    <table class="table table-bordered mt-3 table-striped" style="max-height: 400px; overflow-y: auto;">
         <thead>
         <tr>
             <th>ID</th>
@@ -11,7 +11,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user : ${users}">
+        <tr th:each="user : ${users}" th:class="${user.role == 'ROLE_ADMIN'} ? 'admin-role' : (${user.role == 'ROLE_USER'} ? 'user-role' : (${user.role == 'ROLE_BANNED'} ? 'banned-role' : ''))">
             <td th:text="${user.id}">1</td>
             <td th:text="${user.username}">Username</td>
             <td th:text="${user.role}">User Role</td>
@@ -29,3 +29,4 @@
         </tbody>
     </table>
 </div>
+

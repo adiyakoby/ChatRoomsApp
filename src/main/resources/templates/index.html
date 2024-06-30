@@ -54,6 +54,10 @@
         </form>
         <a th:href="@{/chatroom/{id}(id=${userCurrentChat})}" class="btn btn-primary ms-2">Enter ChatRoom</a>
         <a th:href="@{/newChatForm}" class="btn btn-primary ms-2">Add New ChatRoom</a>
+        <!-- Admin Dashboard Link -->
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <a th:href="@{/adminDashboard}" class="btn btn-primary ms-2">Admin Dashboard</a>
+        </div>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>

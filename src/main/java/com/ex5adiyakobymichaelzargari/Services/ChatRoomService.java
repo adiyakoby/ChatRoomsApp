@@ -1,14 +1,13 @@
 package com.ex5adiyakobymichaelzargari.Services;
 
 import com.ex5adiyakobymichaelzargari.tabels.*;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 
 @Service
 public class ChatRoomService {
@@ -18,6 +17,8 @@ public class ChatRoomService {
 
     @Autowired
     private MessageRepository messageRepository;
+    @Autowired
+    private UserService userService;
 
     public ChatRoom createChatRoom(String name, String description, boolean isEnabled) {
         if (chatRoomRepository.findByName(name) != null) {
@@ -30,11 +31,7 @@ public class ChatRoomService {
         return chatRoomRepository.save(chatroom);
     }
 
-//    public ChatRoom enableChatRoom(Long Id) {
-//        ChatRoom chatroom = chatRoomRepository.findById(Id).get();
-//        chatroom.setEnabled(true);
-//        return chatRoomRepository.save(chatroom);
-//    }
+
 
     public List<ChatRoom> getAllChatRooms() {
 
@@ -113,6 +110,10 @@ public class ChatRoomService {
     public void disableChatRoom(Long id) {
         ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid chat room ID"));
         chatRoom.setEnabled(false);
+
+        Set<User> users = chatRoom.getUsers();
+        users.forEach(user -> userService.removeChatRoomFromUser(user.getId(), id));
+
         chatRoomRepository.save(chatRoom);
     }
 
