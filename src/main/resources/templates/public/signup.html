@@ -47,7 +47,9 @@
             </div>
             <button type="submit" class="btn btn-primary btn-block">Signup</button>
         </form>
-
+        <div th:if="${message}" class="alert alert-danger" role="alert">
+            <span th:text="${message}"></span>
+        </div>
 
         <p class="text-center mt-3"><a th:href="@{/}" class="btn btn-secondary">Back to Home Page</a></p>
     </div>
