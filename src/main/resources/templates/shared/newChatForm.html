@@ -7,49 +7,42 @@
     <style>
         body {
             background-color: #f8f9fa;
-        }
-        .container {
-            margin-top: 50px;
+            padding: 20px;
         }
         .form-container {
+            max-width: 500px;
+            margin: auto;
             background-color: #ffffff;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
         }
     </style>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6 form-container">
-            <h2 class="text-center">Request New Chat Room</h2>
-            <div th:if="${message}" class="alert alert-success" role="alert">
-                <span th:text="${message}"></span>
-            </div>
-            <form th:action="@{/newChatRoom}" method="post" th:object="${chatRoom}">
-                <div class="form-group mt-3">
-                    <label for="name">Chat Room Name</label>
-                    <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter chat room name">
-                    <small class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
-                </div>
-                <div class="form-group mt-2">
-                    <label for="description">Description</label>
-                    <input type="text" class="form-control" id="description" th:field="*{description}" placeholder="Enter chat room description">
-                    <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
-                </div>
-                <button type="submit" class="btn btn-primary mt-3">Request Chat Room</button>
-            </form>
-            <div class="text-center mt-3">
-                <a th:href="@{/}" class="btn btn-secondary">Back to Home Page</a>
-            </div>
+<div class="container mt-5">
+    <div class="form-container">
+        <h2 class="text-center">Request New Chat Room</h2>
+        <div th:if="${message}" class="alert alert-success" role="alert">
+            <span th:text="${message}"></span>
         </div>
+        <form th:action="@{/newChatRoom}" method="post" th:object="${chatRoom}">
+            <div class="form-group mt-3">
+                <label for="name">Chat Room Name</label>
+                <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter chat room name">
+                <small class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+            </div>
+            <div class="form-group mt-2">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description" th:field="*{description}" placeholder="Enter chat room description">
+                <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary mt-3">Request Chat Room</button>
+            </div>
+        </form>
     </div>
 </div>
 
