@@ -39,13 +39,25 @@ public class MessageController {
     @MessageMapping("/chat")
     @SendTo("/topic/messages")
     public void send(MessageDTO message) throws Exception {
-        String time = new SimpleDateFormat("HH:mm").format(new Date());
-        User user = userRepository.findByUsername(message.getFrom());
+        try {
+            String time = new SimpleDateFormat("HH:mm").format(new Date());
+            User user = userRepository.findByUsername(message.getFrom());
+            ChatRoom chatroom = chatRoomRepository.findById(message.getChatId()).orElse(null);
 
-        chatRoomService.addMessageToChatRoom(user, message.getChatId(), message.getText(), time);
-        String destination = "/topic/chatroom/" + message.getChatId();
+            if (chatroom == null || !chatroom.isEnabled()) {
+                String errorDestination = "/topic/errors/" + message.getFrom();
+                messagingTemplate.convertAndSend(errorDestination, "This chatroom was disabled or removed.");
+                return;
+            }
 
-        messagingTemplate.convertAndSend(destination , new MessageDTO(message.getFrom(), message.getText(), time));
+            chatRoomService.addMessageToChatRoom(user, chatroom.getId(), message.getText(), time);
+
+            String destination = "/topic/chatroom/" + message.getChatId();
+            messagingTemplate.convertAndSend(destination , new MessageDTO(message.getFrom(), message.getText(), time));
+        } catch (Exception e) {
+            String errorDestination = "/topic/errors/" + message.getFrom();
+            messagingTemplate.convertAndSend(errorDestination, "An error occurred while sending the message: " + e.getMessage());
+        }
 
     }
 }

@@ -36,9 +36,13 @@ import * as StompJs from "@stomp/stompjs";
 
     stompClient.onConnect = (frame) => {
         console.log('Connected: ' + frame);
-        const chatRoomId = chatId.value.trim(); // Assuming you have a hidden field with the current chat room ID
+        const chatRoomId = chatId.value.trim();
+
         stompClient.subscribe(`/topic/chatroom/${chatRoomId}`, (greeting) => {
             showMessageOutput(JSON.parse(greeting.body));
+        });
+        stompClient.subscribe(`/topic/errors/${userName.value.trim()}`, (errorMessage) => {
+            showError(errorMessage.body);
         });
     };
 
@@ -90,6 +94,14 @@ import * as StompJs from "@stomp/stompjs";
                     <div><strong>${messageOutput.from}</strong> <span class="text-muted" style="font-size: smaller;">${messageOutput.time}</span></div>
                     <div>${messageOutput.text}</div>
                 </div>
+             </div>`;
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function showError(errorMessage) {
+        responseBody.innerHTML +=
+            `<div class="alert alert-danger" role="alert">
+                ${errorMessage}
              </div>`;
         chatBody.scrollTop = chatBody.scrollHeight;
     }
