@@ -4,12 +4,15 @@ import com.ex5adiyakobymichaelzargari.AppConstants;
 import com.ex5adiyakobymichaelzargari.Principals.MyUserPrincipal;
 import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
 import com.ex5adiyakobymichaelzargari.Services.UserService;
+import com.ex5adiyakobymichaelzargari.UserDataSession;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoom;
-import com.ex5adiyakobymichaelzargari.tabels.ChatRoomRepository;
 import jakarta.persistence.EntityExistsException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -21,31 +24,36 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ChatRestController {
 
     @Autowired
-    ChatRoomService chatRoomService;
+    private ChatRoomService chatRoomService;
 
     @Autowired
-    ChatRoomRepository chatRoomRepository;
+    private UserService userService;
 
     @Autowired
-    UserService userService;
+    private UserDataSession userDataSession;
 
     /**
      * Handles the creation of a new chat room.
      *
-     * @param principal the authenticated user
      * @param chatroom the chat room to be created
      * @param redirectAttributes attributes for redirect scenarios
      * @return the redirect URL for the new chat room form
      */
     @PostMapping("/newChatRoom")
-    public String newChatRoom(@AuthenticationPrincipal MyUserPrincipal principal, ChatRoom chatroom, RedirectAttributes redirectAttributes) {
+    public String newChatRoom(@AuthenticationPrincipal MyUserPrincipal principal,@Valid ChatRoom chatroom, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
         try {
+            if (result.hasErrors()) {
+                model.addAttribute("errors", result.getAllErrors());
+                model.addAttribute("userName", userDataSession.getUsername());
+
+                return "shared/newChatForm";
+            }
             chatRoomService.createChatRoom(chatroom);
             redirectAttributes.addFlashAttribute("successMessage", AppConstants.SUCCESS_CHAT_FORM_SENT);
         } catch (EntityExistsException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", AppConstants.ERR_SIGNUP_UNEXPECTED);
+            redirectAttributes.addFlashAttribute("errorMessage", AppConstants.ERR_GENERAL);
         }
         return "redirect:/chatroom/newChatForm";
     }
