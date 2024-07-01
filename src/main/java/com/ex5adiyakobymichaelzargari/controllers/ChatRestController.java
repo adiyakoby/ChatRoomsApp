@@ -5,6 +5,7 @@ import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
 import com.ex5adiyakobymichaelzargari.Services.UserService;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoom;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoomRepository;
+import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -31,17 +32,19 @@ public class ChatRestController {
      * Handles the creation of a new chat room.
      *
      * @param principal the authenticated user
-     * @param chatRoom the chat room to be created
+     * @param chatroom the chat room to be created
      * @param redirectAttributes attributes for redirect scenarios
      * @return the redirect URL for the new chat room form
      */
     @PostMapping("/newChatRoom")
-    public String newChatRoom(@AuthenticationPrincipal MyUserPrincipal principal, ChatRoom chatRoom, RedirectAttributes redirectAttributes) {
+    public String newChatRoom(@AuthenticationPrincipal MyUserPrincipal principal, ChatRoom chatroom, RedirectAttributes redirectAttributes) {
         try {
-            chatRoomRepository.save(chatRoom);
-            redirectAttributes.addFlashAttribute("message", "Your request for a new chat room has been submitted successfully and is pending approval.");
+            chatRoomService.createChatRoom(chatroom);
+            redirectAttributes.addFlashAttribute("successMessage", "Your request for a new chat room has been submitted successfully and is pending approval.");
+        } catch (EntityExistsException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("message", "An error occurred while submitting your request. Please try again.");
+            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while submitting your request. Please try again.");
         }
         return "redirect:/chatroom/newChatForm";
     }

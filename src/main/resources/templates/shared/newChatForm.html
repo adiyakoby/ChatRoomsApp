@@ -25,8 +25,11 @@
 <div class="container mt-5">
     <div class="form-container">
         <h2 class="text-center">Request New Chat Room</h2>
-        <div th:if="${message}" class="alert alert-success" role="alert">
-            <span th:text="${message}"></span>
+        <div th:if="${successMessage}" class="alert alert-success" role="alert">
+            <span th:text="${successMessage}"></span>
+        </div>
+        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+            <span th:text="${errorMessage}"></span>
         </div>
         <form th:action="@{/newChatRoom}" method="post" th:object="${chatRoom}">
             <div class="form-group mt-3">

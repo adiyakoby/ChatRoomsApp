@@ -1,6 +1,7 @@
 package com.ex5adiyakobymichaelzargari.Services;
 
 import com.ex5adiyakobymichaelzargari.tabels.*;
+import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,22 +22,42 @@ public class ChatRoomService {
     private UserService userService;
 
     /**
+     *
+     * @param name the name of the chat room
+     */
+    private void handleDuplicateChatRoom(String name) {
+        if (chatRoomRepository.findByName(name) != null) {
+            throw new EntityExistsException("Chat room name already exists");
+        }
+    }
+
+    /**
      * Creates a new chat room if a room with the same name does not exist.
      *
      * @param name the name of the chat room
      * @param description the description of the chat room
      * @param isEnabled the initial status of the chat room
-     * @return the created chat room or null if a room with the same name exists
      */
-    public ChatRoom createChatRoom(String name, String description, boolean isEnabled) {
-        if (chatRoomRepository.findByName(name) != null) {
-            return null;
-        }
+    public void createChatRoom(String name, String description, boolean isEnabled) {
+
+        handleDuplicateChatRoom(name);
+
         ChatRoom chatroom = new ChatRoom();
         chatroom.setName(name);
         chatroom.setDescription(description);
         chatroom.setEnabled(isEnabled);
-        return chatRoomRepository.save(chatroom);
+        chatRoomRepository.save(chatroom);
+    }
+
+    /**
+     * Creates a new chat room if a room with the same name does not exist.
+     *
+     * @param chatroom chatroom to save.
+     */
+    public void createChatRoom(ChatRoom chatroom) {
+        handleDuplicateChatRoom(chatroom.getName());
+
+        chatRoomRepository.save(chatroom);
     }
 
     /**

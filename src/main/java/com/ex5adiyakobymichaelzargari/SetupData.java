@@ -56,7 +56,12 @@ public class SetupData {
      * Initializes the database with chat room.
      */
     private void initChatRoom() {
-        chatRoomService.createChatRoom("Home", "Home chat - for everyone.", true);
+        try {
+            chatRoomService.createChatRoom("Home", "Home chat - for everyone.", true);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
 
