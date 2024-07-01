@@ -103,7 +103,7 @@ public class ChatRestController {
      * @param redirectAttributes attributes for redirect scenarios
      * @return the redirect URL for the chat room list or an error page
      */
-    @PostMapping("/deleteChatRoom/{id}")
+    @PostMapping("/removeChatRoom/{id}")
     public String deleteChatRoom(@AuthenticationPrincipal MyUserPrincipal principal , @PathVariable Long id ,RedirectAttributes redirectAttributes) {
         try{
             if (principal != null) {

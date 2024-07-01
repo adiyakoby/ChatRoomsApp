@@ -35,9 +35,10 @@ public class UserService {
      * @return the registered user or null if the username is already taken
      */
     public void registerNewUser(User user) {
-        if (userRepository.findByUsername(user.getUsername()) != null) {
+        if (userRepository.findByUsername(user.getUsername().toLowerCase()) != null) {
             throw new EntityExistsException("Username already exists");
         }
+        user.setUsername(user.getUsername().toLowerCase());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.addChatRoom(chatRoomRepository.findById(1L).orElse(null));
         userRepository.save(user);
