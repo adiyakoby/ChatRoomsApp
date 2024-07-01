@@ -41,7 +41,7 @@ public class SetupData {
         User admin = new User();
         admin.setUsername("admin");
         admin.setPassword("admin");
-        admin.setRole("ROLE_ADMIN");
+        admin.setRole(AppConstants.ROLE_ADMIN);
         admin.addChatRoom(chatRoomRepository.findById(1L).orElse(null));
 
         try {

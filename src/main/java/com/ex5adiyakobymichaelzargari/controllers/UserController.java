@@ -1,5 +1,6 @@
 package com.ex5adiyakobymichaelzargari.controllers;
 
+import com.ex5adiyakobymichaelzargari.AppConstants;
 import com.ex5adiyakobymichaelzargari.Services.UserService;
 import com.ex5adiyakobymichaelzargari.UserDataSession;
 import com.ex5adiyakobymichaelzargari.tabels.UserRepository;
@@ -26,8 +27,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserRepository userRepository;
 
     /**
      * Handles the user signup process.
@@ -48,14 +47,14 @@ public class UserController {
 
             userService.registerNewUser(user);
             userDataSession.setUsername(user.getUsername());
-            redirectAttributes.addFlashAttribute("headerSuccessMessage", "You have been registered successfully");
+            redirectAttributes.addFlashAttribute("headerSuccessMessage", AppConstants.SUCCESS_SIGNUP_MSG);
             return "redirect:/login";
 
         } catch (EntityExistsException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             return "redirect:/signup";
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "An unexpected error occurred while trying to sign you up. Please try again.");
+            redirectAttributes.addFlashAttribute("errorMessage", AppConstants.ERR_GENERAL);
             return "redirect:/signup";
         }
     }

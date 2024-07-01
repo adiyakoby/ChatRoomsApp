@@ -1,5 +1,6 @@
 package com.ex5adiyakobymichaelzargari.controllers;
 
+import com.ex5adiyakobymichaelzargari.AppConstants;
 import com.ex5adiyakobymichaelzargari.Principals.MyUserPrincipal;
 import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
 import com.ex5adiyakobymichaelzargari.Services.UserService;
@@ -40,11 +41,11 @@ public class ChatRestController {
     public String newChatRoom(@AuthenticationPrincipal MyUserPrincipal principal, ChatRoom chatroom, RedirectAttributes redirectAttributes) {
         try {
             chatRoomService.createChatRoom(chatroom);
-            redirectAttributes.addFlashAttribute("successMessage", "Your request for a new chat room has been submitted successfully and is pending approval.");
+            redirectAttributes.addFlashAttribute("successMessage", AppConstants.SUCCESS_CHAT_FORM_SENT);
         } catch (EntityExistsException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while submitting your request. Please try again.");
+            redirectAttributes.addFlashAttribute("errorMessage", AppConstants.ERR_SIGNUP_UNEXPECTED);
         }
         return "redirect:/chatroom/newChatForm";
     }
@@ -72,14 +73,14 @@ public class ChatRestController {
         try {
             ChatRoom chat = chatRoomService.getChatRoomByName(chatroom.getName());
             if (chat == null || chat.isChatFull()) {
-                String errMsg = chat == null ? "chat room not found or not approved yet." : "Chat room is full. You cannot join.";
+                String errMsg = chat == null ? AppConstants.ERR_CHATROOM_NOT_FOUND : AppConstants.ERR_CHATROOM_FULL;
                 redirectAttributes.addFlashAttribute("errorAddChatRoom", errMsg);
                 return "redirect:/chatroom/" + 1;
             }
             userService.addChatRoomToUser(principal.getUserId(), chat.getId());
             return "redirect:/chatroom/" + chat.getId();
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorAddChatRoom", "An unexpected error occurred. Please try again.");
+            redirectAttributes.addFlashAttribute("errorAddChatRoom", AppConstants.ERR_GENERAL);
             return "redirect:/chatroom/" + 1;
         }
 
@@ -111,7 +112,7 @@ public class ChatRestController {
             }
             return "redirect:/chatroom/" + 1;
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("message", "An unexpected error occurred while trying to delete the chatroom. Please try again.");
+            redirectAttributes.addFlashAttribute("message", AppConstants.ERR_DELETE_CHATROOM_UNEXPECTED);
             return "redirect:/chatroom/" + 1;
         }
 

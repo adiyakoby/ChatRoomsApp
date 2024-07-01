@@ -1,5 +1,6 @@
 package com.ex5adiyakobymichaelzargari.controllers;
 
+import com.ex5adiyakobymichaelzargari.AppConstants;
 import com.ex5adiyakobymichaelzargari.Principals.MyUserPrincipal;
 import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
 import com.ex5adiyakobymichaelzargari.Services.UserService;
@@ -59,7 +60,7 @@ public class ChatRoomController {
 
             return "/shared/chatroom";
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("message", "An unexpected error occurred. Please try again.");
+            redirectAttributes.addFlashAttribute("message", AppConstants.ERR_GENERAL);
             return "redirect:/chatroom/" + 1;
         }
 

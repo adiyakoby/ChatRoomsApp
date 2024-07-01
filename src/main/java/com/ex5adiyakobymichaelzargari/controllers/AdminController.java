@@ -1,5 +1,6 @@
 package com.ex5adiyakobymichaelzargari.controllers;
 
+import com.ex5adiyakobymichaelzargari.AppConstants;
 import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
 import com.ex5adiyakobymichaelzargari.Services.UserService;
 import com.ex5adiyakobymichaelzargari.UserDataSession;
@@ -44,7 +45,7 @@ public class AdminController {
 
 
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Error loading dashboard data: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", AppConstants.ERR_GENERAL + e.getMessage());
             return "redirect:/error";
         }
         return "/admin/dashboard";
@@ -61,10 +62,10 @@ public class AdminController {
     public String banUser(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             if (id == 1L) {
-                throw new RuntimeException("Cannot ban the main admin.");
+                throw new RuntimeException(AppConstants.ADMIN_ERR_MAIN_ADMIN_BAN);
             }
             userService.banUser(id);
-            redirectAttributes.addFlashAttribute("successMessage", "User has been banned.");
+            redirectAttributes.addFlashAttribute("successMessage", AppConstants.ADMIN_SUCCESS_USER_BAN);
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error banning user: " + e.getMessage());
         }
@@ -83,7 +84,7 @@ public class AdminController {
     public String unbanUser(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             userService.unbanUser(id);
-            redirectAttributes.addFlashAttribute("successMessage", "User has been unbanned.");
+            redirectAttributes.addFlashAttribute("successMessage", AppConstants.ADMIN_SUCCESS_USER_UNBAN);
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error unbanning user: " + e.getMessage());
         }
@@ -102,7 +103,7 @@ public class AdminController {
     public String approveChatRoom(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             chatRoomService.approveChatRoom(id);
-            redirectAttributes.addFlashAttribute("successMessage", "Chat room has been approved.");
+            redirectAttributes.addFlashAttribute("successMessage", AppConstants.ADMIN_SUCCESS_CHATROOM_APPROVE);
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error approving chat room: " + e.getMessage());
         }
@@ -120,7 +121,7 @@ public class AdminController {
     public String disapproveChatRoom(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             chatRoomService.disapproveChatRoom(id);
-            redirectAttributes.addFlashAttribute("successMessage", "Chat room has been disapproved.");
+            redirectAttributes.addFlashAttribute("successMessage", AppConstants.ADMIN_SUCCESS_CHATROOM_DISAPPROVE);
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error disapproving chat room: " + e.getMessage());
         }
@@ -139,13 +140,13 @@ public class AdminController {
     public String deleteChatRoom(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             if (id == 1L) {
-                throw new RuntimeException("Cannot delete the main chat.");
+                throw new RuntimeException(AppConstants.ADMIN_ERR_MAIN_CHAT_DELETE);
             }
             if (userDataSession.getChatId() == id) {
                 userDataSession.setChatId(1L);
             }
             chatRoomService.deleteChatRoom(id);
-            redirectAttributes.addFlashAttribute("successMessage", "Chat room has been deleted.");
+            redirectAttributes.addFlashAttribute("successMessage", AppConstants.ADMIN_SUCCESS_CHATROOM_DELETE);
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error deleting chat room: " + e.getMessage());
         }
@@ -163,7 +164,7 @@ public class AdminController {
     public String enableChatRoom(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             chatRoomService.enableChatRoom(id);
-            redirectAttributes.addFlashAttribute("successMessage", "Chat room has been enabled.");
+            redirectAttributes.addFlashAttribute("successMessage", AppConstants.ADMIN_SUCCESS_CHATROOM_ENABLE);
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error enabling chat room: " + e.getMessage());
         }
@@ -181,13 +182,13 @@ public class AdminController {
     public String disableChatRoom(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             if (id == 1L) {
-                throw new RuntimeException("Cannot disable the main chat.");
+                throw new RuntimeException(AppConstants.ADMIN_ERR_MAIN_CHAT_DISABLE);
             }
             if (userDataSession.getChatId() == id) {
                 userDataSession.setChatId(1L);
             }
             chatRoomService.disableChatRoom(id);
-            redirectAttributes.addFlashAttribute("successMessage", "Chat room has been disabled.");
+            redirectAttributes.addFlashAttribute("successMessage", AppConstants.ADMIN_SUCCESS_CHATROOM_DISABLE);
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error disabling chat room: " + e.getMessage());
         }

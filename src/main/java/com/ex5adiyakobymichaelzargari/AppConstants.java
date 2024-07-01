@@ -55,7 +55,30 @@ public class AppConstants {
     public static final String CHAT_SRV_ERR_NOT_FOUND = "Chat Room not found";
 
 
+    /**
+     * General messages
+     */
+    public static final String SUCCESS_CHAT_FORM_SENT = "Your request for a new chat room has been submitted successfully and is pending approval.";
+    public static final String SUCCESS_SIGNUP_MSG = "You have been registered successfully";
+    public static final String ERR_SIGNUP_UNEXPECTED = "An unexpected error occurred while trying to sign you up. Please try again.";
+    public static final String ERR_CHATROOM_NOT_FOUND = "Chat room not found or not approved yet.";
+    public static final String ERR_CHATROOM_FULL = "Chat room is full. You cannot join.";
+    public static final String ERR_DELETE_CHATROOM_UNEXPECTED = "An unexpected error occurred while trying to delete the chatroom. Please try again.";
+    public static final String ERR_GENERAL = "An unexpected error occurred. Please try again.";
 
+    /**
+     * AdminController constants
+     */
+    public static final String ADMIN_ERR_MAIN_ADMIN_BAN = "Cannot ban the main admin.";
+    public static final String ADMIN_SUCCESS_USER_BAN = "User has been banned.";
+    public static final String ADMIN_SUCCESS_USER_UNBAN = "User has been unbanned.";
+    public static final String ADMIN_SUCCESS_CHATROOM_APPROVE = "Chat room has been approved.";
+    public static final String ADMIN_SUCCESS_CHATROOM_DISAPPROVE = "Chat room has been disapproved.";
+    public static final String ADMIN_ERR_MAIN_CHAT_DELETE = "Cannot delete the main chat.";
+    public static final String ADMIN_SUCCESS_CHATROOM_DELETE = "Chat room has been deleted.";
+    public static final String ADMIN_SUCCESS_CHATROOM_ENABLE = "Chat room has been enabled.";
+    public static final String ADMIN_ERR_MAIN_CHAT_DISABLE = "Cannot disable the main chat.";
+    public static final String ADMIN_SUCCESS_CHATROOM_DISABLE = "Chat room has been disabled.";
 
 }
 

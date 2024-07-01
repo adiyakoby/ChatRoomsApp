@@ -1,5 +1,6 @@
 package com.ex5adiyakobymichaelzargari.controllers;
 
+import com.ex5adiyakobymichaelzargari.AppConstants;
 import com.ex5adiyakobymichaelzargari.Principals.MyUserPrincipal;
 
 import com.ex5adiyakobymichaelzargari.UserDataSession;
@@ -99,7 +100,7 @@ public class MainController {
     @ExceptionHandler({Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleException(Exception ex, Model model) {
-        String errorMessage = (ex != null ? ex.getMessage() : "Unknown error");
+        String errorMessage = (ex != null ? ex.getMessage() : AppConstants.ERR_GENERAL);
         model.addAttribute("errorMessage", errorMessage);
         return "public/error";
     }
