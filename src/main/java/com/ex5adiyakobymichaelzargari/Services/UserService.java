@@ -41,7 +41,6 @@ public class UserService {
      * Registers a new user if the username is not already taken.
      *
      * @param user the user to be registered
-     * @return the registered user or null if the username is already taken
      */
     public void registerNewUser(User user) {
         if (userRepository.findByUsername(user.getUsername().toLowerCase()) != null) {

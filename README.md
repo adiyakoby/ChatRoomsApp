@@ -63,3 +63,6 @@ The project consists of several components:
 ## Additional Notes
 - Ensure to handle database migrations and updates as per your environment and needs.
 - Customize security settings (`SecurityJavaConfig`) and WebSocket configurations (`WebSocketConfig`) as required by your application's security and performance requirements.
+
+
+[index file](doc/index.html)
