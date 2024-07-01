@@ -1,11 +1,13 @@
 package com.ex5adiyakobymichaelzargari.Services;
 
+import com.ex5adiyakobymichaelzargari.AppConstants;
 import com.ex5adiyakobymichaelzargari.tabels.*;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
@@ -27,8 +29,18 @@ public class ChatRoomService {
      */
     private void handleDuplicateChatRoom(String name) {
         if (chatRoomRepository.findByName(name) != null) {
-            throw new EntityExistsException("Chat room name already exists");
+            throw new EntityExistsException(AppConstants.CHAT_SRV_ERR_ALRDY_EXIST);
         }
+    }
+
+    /**
+     * return Chatroom according to id provided.
+     * @param id
+     * @return Chatroom or throws error
+     */
+    private ChatRoom findChatRoom(Long id) {
+        return chatRoomRepository.findById(id).orElseThrow(
+                () -> new NoSuchElementException(AppConstants.CHAT_SRV_ERR_INVALID_ID));
     }
 
     /**
@@ -83,7 +95,7 @@ public class ChatRoomService {
      * @param time the time the message was sent
      */
     public void addMessageToChatRoom(User user, Long chatId, String text, String time) {
-        ChatRoom chatRoom = chatRoomRepository.findById(chatId).orElse(null);
+        ChatRoom chatRoom = findChatRoom(chatId);
         if (chatRoom != null) {
             Message message = new Message(text, user, chatRoom, time);
             chatRoom.addMessage(message);
@@ -98,11 +110,7 @@ public class ChatRoomService {
      * @return the list of messages or null if the chat room does not exist
      */
     public List<Message> getAllMessagesByChatRoom(Long id) {
-        ChatRoom chatroom = chatRoomRepository.findById(id).orElse(null);
-        if (chatroom != null) {
-            return chatroom.getMessages();
-        }
-        return null;
+        return findChatRoom(id).getMessages();
     }
 
     /**
@@ -111,6 +119,7 @@ public class ChatRoomService {
      * @return the list of pending chat rooms
      */
     public List<ChatRoom> findPendingChatRooms() {
+
         return chatRoomRepository.findByEnabledFalse();
     }
 
@@ -120,6 +129,7 @@ public class ChatRoomService {
      * @return the list of enabled chat rooms
      */
     public List<ChatRoom> findEnabledChatRooms() {
+
         return chatRoomRepository.findByEnabledTrue();
     }
 
@@ -129,7 +139,7 @@ public class ChatRoomService {
      * @param id the ID of the chat room
      */
     public void approveChatRoom(Long id) {
-        ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid chat room ID"));
+        ChatRoom chatRoom = findChatRoom(id);
         chatRoom.setEnabled(true);
         chatRoomRepository.save(chatRoom);
     }
@@ -140,8 +150,7 @@ public class ChatRoomService {
      * @param id the ID of the chat room
      */
     public void disapproveChatRoom(Long id) {
-        ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid chat room ID"));
-        chatRoomRepository.delete(chatRoom);
+        chatRoomRepository.delete(findChatRoom(id));
     }
 
     /**
@@ -150,7 +159,8 @@ public class ChatRoomService {
      * @param id the ID of the chat room
      */
     public void deleteChatRoom(Long id) {
-        chatRoomRepository.deleteById(id);
+
+        chatRoomRepository.delete(findChatRoom(id));
     }
 
     /**
@@ -159,7 +169,7 @@ public class ChatRoomService {
      * @param id the ID of the chat room
      */
     public void enableChatRoom(Long id) {
-        ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid chat room ID"));
+        ChatRoom chatRoom = findChatRoom(id);
         chatRoom.setEnabled(true);
         chatRoomRepository.save(chatRoom);
     }
@@ -170,7 +180,7 @@ public class ChatRoomService {
      * @param id the ID of the chat room
      */
     public void disableChatRoom(Long id) {
-        ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid chat room ID"));
+        ChatRoom chatRoom = findChatRoom(id);
         chatRoom.setEnabled(false);
 
         Set<User> users = chatRoom.getUsers();

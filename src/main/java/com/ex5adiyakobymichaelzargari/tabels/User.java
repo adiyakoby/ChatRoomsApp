@@ -1,8 +1,10 @@
 package com.ex5adiyakobymichaelzargari.tabels;
 
+import com.ex5adiyakobymichaelzargari.AppConstants;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,11 +21,12 @@ public class User{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty(message = "username cannot be empty")
+    @NotEmpty(message = AppConstants.USER_ERR_USERNAME_EMPTY)
     @Column(nullable = false, unique = true)
     private String username;
 
-    @NotEmpty(message = "password cannot be empty")
+    @NotEmpty(message = AppConstants.USER_ERR_PASSWORD_EMPTY)
+    @Size(min = 6, message = AppConstants.USER_ERR_PASSWORD_LENGTH)
     private String password;
 
     @NotNull
@@ -45,7 +48,7 @@ public class User{
 
     public User() {
         this.createdAt = new Date();
-        this.role = "ROLE_USER"; // default is user
+        this.role = AppConstants.ROLE_USER; // default is user
     }
 
     public void addChatRoom(ChatRoom chatroom) {

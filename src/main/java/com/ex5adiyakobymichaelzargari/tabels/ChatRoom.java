@@ -1,5 +1,6 @@
 package com.ex5adiyakobymichaelzargari.tabels;
 
+import com.ex5adiyakobymichaelzargari.AppConstants;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class ChatRoom {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotEmpty(message = "ChatRoom name is mandatory field")
+    @NotEmpty(message = AppConstants.CHAT_ERR_NAME_EMPTY)
     private String name;
 
     private String description;

@@ -1,6 +1,7 @@
 package com.ex5adiyakobymichaelzargari.Services;
 
 
+import com.ex5adiyakobymichaelzargari.AppConstants;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoom;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoomRepository;
 import com.ex5adiyakobymichaelzargari.tabels.User;
@@ -38,7 +39,7 @@ public class UserService {
      */
     public void registerNewUser(User user) {
         if (userRepository.findByUsername(user.getUsername().toLowerCase()) != null) {
-            throw new EntityExistsException("Username already exists");
+            throw new EntityExistsException(AppConstants.USER_SRV_ERR_USERNAME_TAKEN);
         }
         user.setUsername(user.getUsername().toLowerCase());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -53,8 +54,10 @@ public class UserService {
      * @param chatRoomId the ID of the chat room
      */
     public void addChatRoomToUser(Long userId, Long chatRoomId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).orElseThrow(() -> new RuntimeException("Chat Room not found"));
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new RuntimeException(AppConstants.USER_SRV_ERR_NOT_FOUND));
+        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).orElseThrow(
+                () -> new RuntimeException(AppConstants.CHAT_SRV_ERR_NOT_FOUND));
         user.addChatRoom(chatRoom);
         userRepository.save(user);
     }
@@ -67,10 +70,12 @@ public class UserService {
      */
     public void removeChatRoomFromUser(Long userId, Long chatRoomId) {
         if (chatRoomId == 1L) {
-            throw new RuntimeException("Can't remove Home Chat room from user");
+            throw new RuntimeException(AppConstants.USER_SRV_ERR_CANT_RMV);
         }
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).orElseThrow(() -> new RuntimeException("Chat Room not found"));
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new RuntimeException(AppConstants.USER_SRV_ERR_NOT_FOUND));
+        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).orElseThrow(
+                () -> new RuntimeException(AppConstants.CHAT_SRV_ERR_NOT_FOUND));
         user.deleteChatRoom(chatRoom);
         userRepository.save(user);
     }
@@ -82,7 +87,8 @@ public class UserService {
      * @return the chat rooms of the user
      */
     public List<ChatRoom> getUserChatRooms(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new RuntimeException(AppConstants.USER_SRV_ERR_NOT_FOUND));
         return user.getChatRooms().stream()
                 .sorted(Comparator.comparing(ChatRoom::getId)) // Sort by ID
                 .collect(Collectors.toList());
@@ -94,6 +100,7 @@ public class UserService {
      * @return the list of all users
      */
     public List<User> findAllUsers() {
+
         return userRepository.findAll();
     }
 
@@ -103,8 +110,9 @@ public class UserService {
      * @param id the ID of the user
      */
     public void banUser(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
-        user.setRole("ROLE_BANNED");
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException(AppConstants.USER_SRV_ERR_INVALID_ID));
+        user.setRole(AppConstants.ROLE_BANNED);
         userRepository.save(user);
     }
 
@@ -114,8 +122,9 @@ public class UserService {
      * @param id the ID of the user
      */
     public void unbanUser(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
-        user.setRole("ROLE_USER");
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException(AppConstants.USER_SRV_ERR_INVALID_ID));
+        user.setRole(AppConstants.ROLE_USER);
         userRepository.save(user);
     }
 

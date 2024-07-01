@@ -1,5 +1,6 @@
 package com.ex5adiyakobymichaelzargari.tabels;
 
+import com.ex5adiyakobymichaelzargari.AppConstants;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -21,7 +22,7 @@ public class Message{
     private long id;
 
 
-    @NotEmpty(message = "message is mandatory field")
+    @NotEmpty(message = AppConstants.MSG_ERR_EMPTY)
     private String message;
 
 
