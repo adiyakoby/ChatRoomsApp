@@ -29,7 +29,7 @@
                         <form th:action="@{'/admin/disableChatRoom/' + ${chatRoom.id}}" method="post" style="display:inline" th:unless="${chatRoom.id == 1}">
                             <button type="submit" class="btn btn-warning btn-sm" th:disabled="${!chatRoom.enabled}">Disable</button>
                         </form>
-                        <form th:action="@{'/admin/removeChatRoom/' + ${chatRoom.id}}" method="post" style="display:inline" th:unless="${chatRoom.id == 1}">
+                        <form th:action="@{'/admin/deleteChatRoom/' + ${chatRoom.id}}" method="post" style="display:inline" th:unless="${chatRoom.id == 1}">
                             <button type="submit" class="btn btn-danger btn-sm">Remove</button>
                         </form>
                     </td>
