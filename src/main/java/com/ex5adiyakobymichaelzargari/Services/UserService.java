@@ -2,11 +2,14 @@ package com.ex5adiyakobymichaelzargari.Services;
 
 
 import com.ex5adiyakobymichaelzargari.AppConstants;
+import com.ex5adiyakobymichaelzargari.Principals.MyUserPrincipal;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoom;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoomRepository;
 import com.ex5adiyakobymichaelzargari.tabels.User;
 import com.ex5adiyakobymichaelzargari.tabels.UserRepository;
 import jakarta.persistence.EntityExistsException;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,9 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private SessionRegistry sessionRegistry;
 
     /**
      * Registers a new user if the username is not already taken.
@@ -106,7 +112,8 @@ public class UserService {
 
     /**
      * Bans a user by setting their role to ROLE_BANNED.
-     *
+     * and deletes all of the user's sessions the spring security is management
+     * for this user.
      * @param id the ID of the user
      */
     public void banUser(Long id) {
@@ -114,6 +121,13 @@ public class UserService {
                 () -> new IllegalArgumentException(AppConstants.USER_SRV_ERR_INVALID_ID));
         user.setRole(AppConstants.ROLE_BANNED);
         userRepository.save(user);
+
+        // Invalidate user sessions
+        List<SessionInformation> sessions = sessionRegistry.getAllSessions(new MyUserPrincipal(user), false);
+        for (SessionInformation session : sessions) {
+            session.expireNow();
+        }
+
     }
 
     /**

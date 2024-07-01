@@ -81,6 +81,16 @@ public class MainController {
     }
 
     /**
+     * Displays the banned user page.
+     *
+     * @return the view name of the banned user page
+     */
+    @GetMapping("/banned")
+    public String error() {
+        return "public/BannedUser";
+    }
+
+    /**
      * Displays the forbidden page.
      *
      * @return the view name of the forbidden page

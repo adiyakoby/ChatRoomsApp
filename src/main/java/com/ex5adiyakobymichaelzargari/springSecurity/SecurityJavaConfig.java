@@ -3,9 +3,15 @@ package com.ex5adiyakobymichaelzargari.springSecurity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 /**
@@ -13,6 +19,26 @@ import static org.springframework.security.config.Customizer.withDefaults;
  */
 @Configuration
 public class SecurityJavaConfig {
+
+    /**
+     * Bean for HttpSessionEventPublisher.
+     *
+     * @return HttpSessionEventPublisher implementation
+     */
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
+    }
+
+    /**
+     * Bean for SessionRegistry.
+     *
+     * @return SessionRegistry implementation
+     */
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
 
     /**
      * Bean for password encoding using BCrypt.
@@ -53,8 +79,22 @@ public class SecurityJavaConfig {
                 .exceptionHandling(
                         (exceptionHandling) -> exceptionHandling
                                 .accessDeniedPage("/403")
-                );
+                )
+                .sessionManagement( (sessionManagement) -> sessionManagement
+                        .maximumSessions(1)
+                        .sessionRegistry(sessionRegistry()).expiredUrl("/banned"));
+
         return http.build();
     }
 
+    /**
+     * Bean for SessionAuthenticationStrategy.
+     *
+     * @param sessionRegistry the session registry
+     * @return SessionAuthenticationStrategy implementation
+     */
+    @Bean
+    public SessionAuthenticationStrategy sessionAuthenticationStrategy(SessionRegistry sessionRegistry) {
+        return new RegisterSessionAuthenticationStrategy(sessionRegistry);
+    }
 }
