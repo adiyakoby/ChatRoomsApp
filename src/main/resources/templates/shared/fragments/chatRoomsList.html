@@ -6,8 +6,8 @@
                 <li th:each="room : ${chatRoomsList}" class="list-group-item d-flex justify-content-between align-items-center">
                     <span th:text="${room.name}">Room Name</span>
                     <div>
-                        <form th:action="@{'/chatroom/' + ${room.id}}" method="get" class="d-inline" th:unless="${room.id == 1}">
-                            <button type="submit" class="btn btn-primary btn-sm" >Join</button>
+                        <form th:action="@{'/chatroom/' + ${room.id}}" method="get" class="d-inline" >
+                            <button type="submit" class="btn btn-primary btn-sm" th:attr="disabled=${room.id == currentChat.id}">Join</button>
                         </form>
                         <form th:action="@{'/removeChatRoom/' + ${room.id}}" method="post" class="d-inline" th:unless="${room.id == 1}">
                             <button type="submit" class="btn btn-danger btn-sm" >Remove</button>
