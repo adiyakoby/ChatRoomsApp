@@ -10,8 +10,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * UserService handles user related actions such as registering, banning, and unbanning users.
@@ -64,6 +66,9 @@ public class UserService {
      * @param chatRoomId the ID of the chat room
      */
     public void removeChatRoomFromUser(Long userId, Long chatRoomId) {
+        if (chatRoomId == 1L) {
+            throw new RuntimeException("Can't remove Home Chat room from user");
+        }
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).orElseThrow(() -> new RuntimeException("Chat Room not found"));
         user.deleteChatRoom(chatRoom);
@@ -76,9 +81,11 @@ public class UserService {
      * @param userId the ID of the user
      * @return the chat rooms of the user
      */
-    public Set<ChatRoom> getUserChatRooms(Long userId) {
+    public List<ChatRoom> getUserChatRooms(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        return user.getChatRooms();
+        return user.getChatRooms().stream()
+                .sorted(Comparator.comparing(ChatRoom::getId)) // Sort by ID
+                .collect(Collectors.toList());
     }
 
     /**

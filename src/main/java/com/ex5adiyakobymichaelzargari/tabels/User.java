@@ -39,7 +39,7 @@ public class User{
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "chatroom_id")
     )
-    private Set<ChatRoom> chatRooms = new TreeSet<>(Comparator.comparing(ChatRoom::getId,Long::compareTo));
+    private Set<ChatRoom> chatRooms = new TreeSet<>(Comparator.comparing(ChatRoom::getId));
 
 
 
