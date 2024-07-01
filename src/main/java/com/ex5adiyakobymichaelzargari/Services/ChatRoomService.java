@@ -159,8 +159,10 @@ public class ChatRoomService {
      * @param id the ID of the chat room
      */
     public void deleteChatRoom(Long id) {
-
-        chatRoomRepository.delete(findChatRoom(id));
+        ChatRoom chatRoom = findChatRoom(id);
+        Set<User> users = chatRoom.getUsers();
+        users.forEach(user -> userService.removeChatRoomFromUser(user.getId(), id));
+        chatRoomRepository.delete(chatRoom);
     }
 
     /**
