@@ -15,6 +15,12 @@
                th:href="@{/chatroom/{id}(id=${userCurrentChat ?: 1})}"
                class="btn btn-primary ms-2">Enter ChatRoom</a>
         </div>
+        <div th:if="${headerSuccessMessage}" class="alert alert-success mt-3" role="alert">
+            <span th:text="${headerSuccessMessage}"></span>
+        </div>
+        <div th:if="${headerErrorMessage}" class="alert alert-danger mt-3" role="alert">
+            <span th:text="${headerErrorMessage}"></span>
+        </div>
         <div>
             <div sec:authorize="!isAuthenticated()" class="text-center mb-4 d-inline-flex">
                 <a th:href="@{/login}" class="btn btn-primary me-2">Login</a>

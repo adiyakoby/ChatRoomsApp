@@ -5,6 +5,7 @@ import com.ex5adiyakobymichaelzargari.Services.ChatRoomService;
 import com.ex5adiyakobymichaelzargari.Services.UserService;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoomRepository;
 import com.ex5adiyakobymichaelzargari.tabels.User;
+import com.ex5adiyakobymichaelzargari.tabels.UserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,8 @@ public class SetupData {
 
     @Autowired
     private ChatRoomRepository chatRoomRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     /**
      * Initializes the database with users .
@@ -41,15 +44,12 @@ public class SetupData {
         admin.setRole("ROLE_ADMIN");
         admin.addChatRoom(chatRoomRepository.findById(1L).orElse(null));
 
-        User test = new User();
-        test.setUsername("test");
-        test.setPassword("test");
-        test.setRole("ROLE_USER");
-        test.addChatRoom(chatRoomRepository.findById(1L).orElse(null));
-
-
-        userService.registerNewUser(admin);
-        userService.registerNewUser(test);
+        try {
+            userRepository.save(admin);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**

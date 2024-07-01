@@ -3,6 +3,7 @@ package com.ex5adiyakobymichaelzargari.controllers;
 import com.ex5adiyakobymichaelzargari.Services.UserService;
 import com.ex5adiyakobymichaelzargari.UserDataSession;
 import com.ex5adiyakobymichaelzargari.tabels.UserRepository;
+import jakarta.persistence.EntityExistsException;
 import org.springframework.ui.Model;
 import com.ex5adiyakobymichaelzargari.tabels.User;
 import jakarta.validation.Valid;
@@ -43,16 +44,19 @@ public class UserController {
             if (result.hasErrors()) {
                 model.addAttribute("errors", result.getAllErrors());
                 return "public/signup";
-            } else if (userRepository.findByUsername(user.getUsername()) != null) {
-                model.addAttribute("errorExist", "Username already exists");
-                return "public/signup";
             }
+
             userService.registerNewUser(user);
             userDataSession.setUsername(user.getUsername());
-            return "public/index";
+            redirectAttributes.addFlashAttribute("headerSuccessMessage", "You have been registered successfully");
+            return "redirect:/login";
+
+        } catch (EntityExistsException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/signup";
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("generalError", "An unexpected error occurred while trying to sign you up. Please try again.");
-            return "redirect:/public/signup";
+            redirectAttributes.addFlashAttribute("errorMessage", "An unexpected error occurred while trying to sign you up. Please try again.");
+            return "redirect:/signup";
         }
     }
 

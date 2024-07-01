@@ -5,6 +5,7 @@ import com.ex5adiyakobymichaelzargari.tabels.ChatRoom;
 import com.ex5adiyakobymichaelzargari.tabels.ChatRoomRepository;
 import com.ex5adiyakobymichaelzargari.tabels.User;
 import com.ex5adiyakobymichaelzargari.tabels.UserRepository;
+import jakarta.persistence.EntityExistsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +34,13 @@ public class UserService {
      * @param user the user to be registered
      * @return the registered user or null if the username is already taken
      */
-    public User registerNewUser(User user) {
+    public void registerNewUser(User user) {
         if (userRepository.findByUsername(user.getUsername()) != null) {
-            return null;
+            throw new EntityExistsException("Username already exists");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.addChatRoom(chatRoomRepository.findById(1L).orElse(null));
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     /**

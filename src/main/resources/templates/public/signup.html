@@ -30,12 +30,10 @@
     <div class="signup-container">
         <h2 class="signup-heading">Create Your Account</h2>
 
-        <div th:if="${errorExist}" class="alert alert-danger" role="alert">
-            <span th:text="${errorExist}"></span>
+        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+            <span th:text="${errorMessage}"></span>
         </div>
-        <div th:if="${generalError}" class="alert alert-danger" role="alert">
-            <span th:text="${generalError}"></span>
-        </div>
+
 
         <form th:action="@{/signup}" method="post" th:object="${user}" class="signup-form">
             <div class="mb-3">
