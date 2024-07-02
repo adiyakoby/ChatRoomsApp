@@ -1,5 +1,6 @@
 # Chat Application
 
+### [project presentation from google drive](https://drive.google.com/drive/folders/1Bm6LGDGoH5JreZatmhmDnYwUYJHW-f6U?usp=sharing)
 ### Adi Yakoby | 208773168 | adija@edu.hac.ac.il
 ### Michael Zargari | 208289082 | michaelza@edu.hac.ac.il
 
