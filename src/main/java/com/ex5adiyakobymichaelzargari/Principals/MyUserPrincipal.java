@@ -65,15 +65,6 @@ public class MyUserPrincipal implements UserDetails {
     }
 
 
-    /**
-     *
-     *
-     * @return the user's account non expired
-     */
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
 
     /**
      *
@@ -85,27 +76,8 @@ public class MyUserPrincipal implements UserDetails {
         return !user.getRole().equals(AppConstants.ROLE_BANNED);
     }
 
-    /**
-     *
-     *
-     * @return the user's credentials non expired
-     */
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
 
-    /**
-     *
-     *
-     * @return the user's enabled
-     */
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    /**
+  /**
      * Compares this MyUserPrincipal instance with another object for equality.
      *
      * @param o the object to compare with
