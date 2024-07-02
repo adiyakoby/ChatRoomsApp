@@ -45,7 +45,7 @@ public class SetupData {
         admin.addChatRoom(chatRoomRepository.findById(1L).orElse(null));
 
         try {
-            userRepository.save(admin);
+            userService.registerNewUser(admin);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
