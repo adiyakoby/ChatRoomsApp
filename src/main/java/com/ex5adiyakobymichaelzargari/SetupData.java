@@ -25,8 +25,7 @@ public class SetupData {
 
     @Autowired
     private ChatRoomRepository chatRoomRepository;
-    @Autowired
-    private UserRepository userRepository;
+
 
     /**
      * Initializes the database with users .
@@ -45,7 +44,7 @@ public class SetupData {
         admin.addChatRoom(chatRoomRepository.findById(1L).orElse(null));
 
         try {
-            userRepository.save(admin);
+            userService.registerNewUser(admin);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
